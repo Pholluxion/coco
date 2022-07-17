@@ -9,7 +9,6 @@ public class ConexionBD implements DataBase<Object> {
 
     private static ConexionBD instance;
 
-    // Configuracion de la conexion a la base de datos 
     private String DB_driver = "";
     private String url = "";
     private String db = "";
@@ -29,37 +28,31 @@ public class ConexionBD implements DataBase<Object> {
         return instance;
     }
 
-    //Constructor sin parmetros		
     private ConexionBD() {
         DB_driver = "com.mysql.cj.jdbc.Driver";
         host = "localhost:3306";
         db = "coco";
-        url = "jdbc:mysql://" + host + "/" + db + "?serverTimezone=UTC"; 		//URL DB
-        username = "root";                      			//usuario base de datos global 
-        password = "G1a9b9y8";
+        url = "jdbc:mysql://" + host + "/" + db + "?serverTimezone=UTC";
+        username = "root";
+        password = "";
         try {
-            //Asignacin del Driver
             Class.forName(DB_driver);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ConexionBD.class.getName()).log(Level.SEVERE, null, ex);
         }
         try {
-            // Realizar la conexion
             con = DriverManager.getConnection(url, username, password);
             con.setTransactionIsolation(8);
             System.out.println("conectado");
         } catch (SQLException ex) {
             Logger.getLogger(ConexionBD.class.getName()).log(Level.SEVERE, null, ex);
         }
-        // Realizar la conexin
     }
 
-    //Retornar la conexin
     public Connection getConnection() {
         return con;
     }
 
-    //Cerrar la conexin
     public void closeConnection(Connection con) {
         if (con != null) {
             try {

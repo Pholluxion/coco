@@ -41,10 +41,9 @@
             //Solicitud de parámetros enviados desde el frontned
             //, uso de request.getParameter("nombre parametro")
             // creación de objeto y llamado a método guardar    
-            String id = request.getParameter("id");
             String name = request.getParameter("name");
 
-            DocTypeModel userRol = new DocTypeModel(Integer.parseInt(id), name);
+            DocTypeModel userRol = new DocTypeModel(0, name);
 
             if (docTypeDao.create(userRol)) {
                 respuesta += "\"" + proceso + "\": true";

@@ -41,10 +41,10 @@
             //Solicitud de parámetros enviados desde el frontned
             //, uso de request.getParameter("nombre parametro")
             // creación de objeto y llamado a método guardar    
-            String idUserRol = request.getParameter("id");
-            String nameUserRol = request.getParameter("name");
+            String name = request.getParameter("name");
 
-            UserRolModel userRol = new UserRolModel(Integer.parseInt(idUserRol), nameUserRol);
+            UserRolModel userRol = new UserRolModel();
+            userRol.setName(name);
 
             if (userRolDao.create(userRol)) {
                 respuesta += "\"" + proceso + "\": true";

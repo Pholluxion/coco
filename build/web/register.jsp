@@ -11,16 +11,8 @@
 
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-        <style>
-            div{
-                border: solid transparent;
-                padding: 5px;
-            }
-        </style>
-
+        <style>div{padding: 5px;}</style>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
 
     </head>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
@@ -70,13 +62,14 @@
 
                         </div>
                         <div class = "col-6">
+                            
                             <input type="text" class="form-control" ng-model="b1.doc_type" placeholder="Tipo de documento">
-
 
                         </div>
                     </div>
                     <div class = "row">
                         <div class = "col-6">
+                            
                             <input type="text" class="form-control" ng-model="b1.phone_number" placeholder="Número de telefono">
 
                         </div>
@@ -155,6 +148,32 @@
 
                 </div>
 
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Correo</th>
+                            <th scope="col">Password</th>
+                            <th scope="col">Tipo de documento</th>
+                            <th scope="col">Número de documento</th>
+                            <th scope="col">Telefono</th>
+                            <th scope="col">Rol</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="user in b1.Users">
+                            <td>{{user.name}}</td>
+                            <td>{{user.email}}</td>
+                            <td>{{user.password}}</td>
+                            <td>{{user.docType}}</td>
+                            <td>{{user.document}}</td>
+                            <td>{{user.phoneNumber}}</td>
+                            <td>{{user.userRol}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
             </div>
 
         </div>
@@ -172,7 +191,8 @@
                         url: 'apis/user_api.jsp',
                         params: parametros
                     }).then(function (response) {
-                        console.log(response.data)
+                        console.log(response.data.listUsers);
+                        b1.Users = response.data.listUsers;
                     });
                 };
 

@@ -172,7 +172,7 @@
                         url: 'apis/user_api.jsp',
                         params: parametros
                     }).then(function (response) {
-                         console.log(response.data)
+                        console.log(response.data)
                     });
                 };
 

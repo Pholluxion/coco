@@ -85,7 +85,8 @@
             //, uso de request.getParameter("nombre parametro")
             //creación de objeto y llamado al metodo listar
             try {
-                List<UserModel> lista = userDao.readAll();
+                List<UserModel> lista = new ArrayList<>();
+                lista = userDao.readAll();
                 respuesta += "\"" + proceso + "\": true,\"listUsers\":" + new Gson().toJson(lista);
             } catch (Exception ex) {
                 respuesta += "\"" + proceso + "\": true,\"listUsers\":[]";

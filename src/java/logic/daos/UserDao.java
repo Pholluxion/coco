@@ -73,6 +73,7 @@ public class UserDao implements GenericDao<UserModel, Long> {
 
     @Override
     public List<UserModel> readAll() {
+        users.clear();
         try {
             ResultSet data = (ResultSet) UserDao.connection.read(this.getReadAllQuery());
 

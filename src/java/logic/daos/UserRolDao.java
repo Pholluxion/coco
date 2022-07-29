@@ -66,6 +66,7 @@ public class UserRolDao implements GenericDao<UserRolModel, Integer> {
 
     @Override
     public List<UserRolModel> readAll() {
+        userRols.clear();
         try {
             ResultSet data = (ResultSet) UserRolDao.connection.read(this.getReadAllQuery());
 

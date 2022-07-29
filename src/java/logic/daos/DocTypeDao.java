@@ -66,6 +66,7 @@ public class DocTypeDao implements GenericDao<DocTypeModel, Integer> {
 
     @Override
     public List<DocTypeModel> readAll() {
+        docsType.clear();
         try {
             ResultSet data = (ResultSet) DocTypeDao.connection.read(this.getReadAllQuery());
 

@@ -62,15 +62,20 @@
 
                         </div>
                         <div class = "col-6">
-                            
+
                             <input type="text" class="form-control" ng-model="b1.doc_type" placeholder="Tipo de documento">
 
                         </div>
                     </div>
                     <div class = "row">
                         <div class = "col-6">
-                            
+
                             <input type="text" class="form-control" ng-model="b1.phone_number" placeholder="Número de telefono">
+
+                        </div>
+                        <div class = "col-6">
+
+                            <input type="text" class="form-control" ng-model="b1.rol" placeholder="Rol de usuario">
 
                         </div>
                     </div>
@@ -83,10 +88,24 @@
                             <a class="btn btn-primary btn-success" href="#" role="button" ng-click="b1.list()">Listar</a>
                         </div>
                         <div class = "col-3">
-                            <a class="btn btn-primary btn-warning" href="#" role="button" ng-click="b1.update()">Actualizar</a>
+
+
+                            <input type="text" class="form-control" placeholder="id" ng-model="b1.id">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary btn-warning" type="button" ng-click="b1.update()">Actualizar</button>
+                            </div>
+
+
+
                         </div>
                         <div class = "col-3">
-                            <a class="btn btn-primary btn-danger" href="#" role="button" ng-click="b1.delete()">Borrar</a>
+
+
+                            <input type="text" class="form-control" placeholder="id" ng-model="b1.id">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary btn-danger" type="button" ng-click="b1.delete()" ng-click="b1.list()">Borrar</button>
+                            </div>
+
                         </div>
                     </div>
 
@@ -144,6 +163,10 @@
                             <input type="text" class="form-control" ng-model="b1.phone_number" placeholder="Número de telefono" disabled="true" value="{{b1.phone_number}}">
 
                         </div>
+                        <div class = "col-6">
+                            <input type="text" class="form-control" ng-model="b1.rol" placeholder="Rol de usuario" disabled="true" value="{{b1.rol}}">
+
+                        </div>
                     </div>
 
                 </div>
@@ -151,6 +174,7 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
+                            <th scope="col">id</th>
                             <th scope="col">Nombre</th>
                             <th scope="col">Correo</th>
                             <th scope="col">Password</th>
@@ -163,6 +187,7 @@
                     </thead>
                     <tbody>
                         <tr ng-repeat="user in b1.Users">
+                            <td>{{user.id}}</td>
                             <td>{{user.name}}</td>
                             <td>{{user.email}}</td>
                             <td>{{user.password}}</td>
@@ -193,6 +218,76 @@
                     }).then(function (response) {
                         console.log(response.data.listUsers);
                         b1.Users = response.data.listUsers;
+                    });
+                };
+
+                b1.save = function () {
+                    var parametros = {
+                        process: 'save',
+                        name: b1.name,
+                        email: b1.email,
+                        pass: b1.password,
+                        doc: b1.document,
+                        tel: b1.phone_number,
+                        dtype: b1.doc_type,
+                        rol: b1.rol
+                    };
+
+                    $http({
+                        method: 'POST',
+                        url: 'apis/user_api.jsp',
+                        params: parametros
+                    }).then(function (response) {
+                        console.log(response.data.ok);
+                        if (response.data.ok) {
+                            alert("Registro exitoso");
+                        }
+                    });
+                };
+
+                b1.update = function () {
+                    var parametros = {
+                        process: 'update',
+                        id: b1.id,
+                        name: b1.name,
+                        email: b1.email,
+                        pass: b1.password,
+                        doc: b1.document,
+                        tel: b1.phone_number,
+                        dtype: b1.doc_type,
+                        rol: b1.rol
+                    };
+
+                    $http({
+                        method: 'POST',
+                        url: 'apis/user_api.jsp',
+                        params: parametros
+                    }).then(function (response) {
+                        console.log(response.data.ok);
+                        if (response.data.ok) {
+                            alert("Actualización exitosa");
+                        }
+
+                    });
+
+                };
+
+                b1.delete = function () {
+                    var parametros = {
+                        process: 'del',
+                        id: b1.id
+                    };
+
+                    $http({
+                        method: 'POST',
+                        url: 'apis/user_api.jsp',
+                        params: parametros
+                    }).then(function (response) {
+                        console.log(response.data.ok);
+                        if (response.data.ok) {
+                            
+                            alert("Usuario eliminado exitosamente");
+                        }
                     });
                 };
 

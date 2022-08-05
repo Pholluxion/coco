@@ -57,9 +57,9 @@
             user.setEmail(email);
             user.setPassword(password);
             user.setDocument(doc);
-            user.setDocType(Integer.parseInt(docType));
+            user.setDocType(Integer.valueOf(docType));
             user.setPhoneNumber(tel);
-            user.setUserRol(Integer.parseInt(rol));
+            user.setUserRol(Integer.valueOf(rol));
 
             if (userDao.create(user)) {
                 respuesta += "\"" + proceso + "\": true";
@@ -111,9 +111,9 @@
             user.setEmail(email);
             user.setPassword(password);
             user.setDocument(doc);
-            user.setDocType(Integer.parseInt(docType));
+            user.setDocType(Integer.valueOf(docType));
             user.setPhoneNumber(tel);
-            user.setUserRol(Integer.parseInt(rol));
+            user.setUserRol(Integer.valueOf(rol));
             
             if (userDao.update(user,user.getId())) {
                 respuesta += "\"" + proceso + "\": true";

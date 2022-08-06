@@ -57,9 +57,9 @@
             user.setEmail(email);
             user.setPassword(password);
             user.setDocument(doc);
-            user.setDocType(Integer.valueOf(docType));
+            user.setDocType(Integer.parseInt(docType));
             user.setPhoneNumber(tel);
-            user.setUserRol(Integer.valueOf(rol));
+            user.setUserRol(Integer.parseInt(rol));
 
             if (userDao.create(user)) {
                 respuesta += "\"" + proceso + "\": true";

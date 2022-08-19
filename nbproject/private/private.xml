@@ -3,8 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Users/carlosdanielpenalozatorres/NetBeansProjects/coco/web/apis/user_api.jsp</file>
-            <file>file:/Users/carlosdanielpenalozatorres/NetBeansProjects/coco/web/apis/doc_type_api.jsp</file>
+            <file>file:/Users/carlosdanielpenalozatorres/NetBeansProjects/coco/src/java/logic/daos/UserDao.java</file>
+            <file>file:/Users/carlosdanielpenalozatorres/NetBeansProjects/coco/web/app-services/authentication.service.js</file>
+            <file>file:/Users/carlosdanielpenalozatorres/NetBeansProjects/coco/web/home/home.controller.js</file>
+            <file>file:/Users/carlosdanielpenalozatorres/NetBeansProjects/coco/web/login/login.view.html</file>
+            <file>file:/Users/carlosdanielpenalozatorres/NetBeansProjects/coco/web/app-services/user.service.js</file>
+            <file>file:/Users/carlosdanielpenalozatorres/NetBeansProjects/coco/web/index.html</file>
+            <file>file:/Users/carlosdanielpenalozatorres/NetBeansProjects/coco/web/apis/users.jsp</file>
+            <file>file:/Users/carlosdanielpenalozatorres/NetBeansProjects/coco/src/java/logic/models/UserModel.java</file>
+            <file>file:/Users/carlosdanielpenalozatorres/NetBeansProjects/coco/web/app-services/flash.service.js</file>
+            <file>file:/Users/carlosdanielpenalozatorres/NetBeansProjects/coco/web/login/login.controller.js</file>
         </group>
     </open-files>
 </project-private>

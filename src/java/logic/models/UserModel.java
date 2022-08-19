@@ -2,24 +2,24 @@ package logic.models;
 
 public class UserModel {
 
-    private long id;
+    private String id;
     private String name;
     private String email;
     private String password;
     private String document;
     private String phoneNumber;
 
-    private int docType;
-    private int userRol;
+    private String docType;
+    private String userRol;
 
     public UserModel() {
     }
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -63,19 +63,19 @@ public class UserModel {
         this.phoneNumber = phoneNumber;
     }
 
-    public int getDocType() {
+    public String getDocType() {
         return docType;
     }
 
-    public void setDocType(int docType) {
+    public void setDocType(String docType) {
         this.docType = docType;
     }
 
-    public int getUserRol() {
+    public String getUserRol() {
         return userRol;
     }
 
-    public void setUserRol(int userRol) {
+    public void setUserRol(String userRol) {
         this.userRol = userRol;
     }
 

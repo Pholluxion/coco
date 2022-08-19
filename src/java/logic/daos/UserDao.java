@@ -11,7 +11,7 @@ import logic.models.UserModel;
 import persistence.interfaces.DataBase;
 import persistence.mysql.ConexionBD;
 
-public class UserDao implements GenericDao<UserModel, Long> {
+public class UserDao implements GenericDao<UserModel, String> {
 
     private static DataBase connection;
     private static UserModel user;
@@ -34,19 +34,19 @@ public class UserDao implements GenericDao<UserModel, Long> {
     }
 
     @Override
-    public UserModel read(Long idModel) {
-        ResultSet data = (ResultSet) UserDao.connection.read(this.getReadQuery(idModel));
+    public UserModel read(String email) {
+        ResultSet data = (ResultSet) UserDao.connection.read(this.getReadQuery(email));
         try {
             if (data.next()) {
                 user = new UserModel();
-                user.setId(data.getLong("id"));
+                user.setId(data.getString("id"));
                 user.setName(data.getString("name"));
                 user.setEmail(data.getString("email"));
                 user.setPassword(data.getString("password"));
                 user.setDocument(data.getString("document"));
                 user.setPhoneNumber(data.getString("phone_number"));
-                user.setDocType(data.getInt("doc_type"));
-                user.setUserRol(data.getInt("rol"));
+                user.setDocType(data.getString("doc_type"));
+                user.setUserRol(data.getString("rol"));
             }
             return user;
         } catch (SQLException ex) {
@@ -62,12 +62,12 @@ public class UserDao implements GenericDao<UserModel, Long> {
     }
 
     @Override
-    public boolean update(UserModel model, Long idModel) {
+    public boolean update(UserModel model, String idModel) {
         return UserDao.connection.update(getUpdateQuery(model, idModel));
     }
 
     @Override
-    public boolean delete(Long idModel) {
+    public boolean delete(String idModel) {
         return UserDao.connection.delete(getDeleteQuery(idModel));
     }
 
@@ -79,14 +79,14 @@ public class UserDao implements GenericDao<UserModel, Long> {
 
             while (data.next()) {
                 user = new UserModel();
-                user.setId(data.getLong("id"));
+                user.setId(data.getString("id"));
                 user.setName(data.getString("name"));
                 user.setEmail(data.getString("email"));
                 user.setPassword(data.getString("password"));
                 user.setDocument(data.getString("document"));
                 user.setPhoneNumber(data.getString("phone_number"));
-                user.setDocType(data.getInt("doc_type"));
-                user.setUserRol(data.getInt("rol"));
+                user.setDocType(data.getString("doc_type"));
+                user.setUserRol(data.getString("rol"));
                 users.add(user);
             }
 
@@ -96,8 +96,8 @@ public class UserDao implements GenericDao<UserModel, Long> {
         return users;
     }
 
-    private String getReadQuery(Long userId) {
-        return "SELECT * FROM user WHERE id = " + userId + ";";
+    private String getReadQuery(String email) {
+        return "SELECT * FROM user WHERE email = " + email + ";";
     }
 
     private String getInsertQuery(UserModel user) {
@@ -112,7 +112,7 @@ public class UserDao implements GenericDao<UserModel, Long> {
                 + user.getUserRol() + ");";
     }
 
-    private String getUpdateQuery(UserModel user, Long idModel) {
+    private String getUpdateQuery(UserModel user, String idModel) {
         return "UPDATE user SET name='" + user.getName()
                 + "', email='" + user.getEmail()
                 + "', password='" + user.getPassword()
@@ -123,12 +123,40 @@ public class UserDao implements GenericDao<UserModel, Long> {
                 + " WHERE id=" + idModel + ";";
     }
 
-    private String getDeleteQuery(Long idModel) {
+    private String getDeleteQuery(String idModel) {
         return "DELETE FROM user WHERE id=" + idModel + ";";
     }
 
     private String getReadAllQuery() {
         return "SELECT * FROM user;";
+    }
+
+    private String getLogInQuery(String email, String password) {
+        return "SELECT * FROM user WHERE email = '" + email + "' and password = '" + password + "';";
+    }
+
+    public UserModel logIn(String email, String pass) {
+        ResultSet data = (ResultSet) UserDao.connection.read(this.getLogInQuery(email, pass));
+        try {
+            user = new UserModel();
+
+            if (data.next()) {
+
+                user.setId(data.getString("id"));
+                user.setName(data.getString("name"));
+                user.setEmail(data.getString("email"));
+                user.setPassword(data.getString("password"));
+                user.setDocument(data.getString("document"));
+                user.setPhoneNumber(data.getString("phone_number"));
+                user.setDocType(data.getString("doc_type"));
+                user.setUserRol(data.getString("rol"));
+            }
+            return user;
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+
     }
 
 }

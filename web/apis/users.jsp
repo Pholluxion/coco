@@ -24,7 +24,7 @@
         "del",
         "update",
         "list",
-        "find"
+        "auth"
     });
 
     UserDao userDao = UserDao.getInstance();
@@ -57,9 +57,9 @@
             user.setEmail(email);
             user.setPassword(password);
             user.setDocument(doc);
-            user.setDocType(Integer.parseInt(docType));
+            user.setDocType(docType);
             user.setPhoneNumber(tel);
-            user.setUserRol(Integer.parseInt(rol));
+            user.setUserRol(rol);
 
             if (userDao.create(user)) {
                 respuesta += "\"" + proceso + "\": true";
@@ -74,7 +74,7 @@
 
             String id = request.getParameter("id");
 
-            if (userDao.delete(Long.parseLong(id))) {
+            if (userDao.delete(id)) {
                 respuesta += "\"" + proceso + "\": true";
             } else {
                 respuesta += "\"" + proceso + "\": false";
@@ -106,32 +106,33 @@
 
             UserModel user = new UserModel();
             
-            user.setId(Long.parseLong(id));
+            user.setId(id);
             user.setName(name);
             user.setEmail(email);
             user.setPassword(password);
             user.setDocument(doc);
-            user.setDocType(Integer.valueOf(docType));
+            user.setDocType(docType);
             user.setPhoneNumber(tel);
-            user.setUserRol(Integer.valueOf(rol));
+            user.setUserRol(rol);
             
             if (userDao.update(user,user.getId())) {
                 respuesta += "\"" + proceso + "\": true";
             } else {
                 respuesta += "\"" + proceso + "\": false";
             }
-        } else if (proceso.equals("find")) {
+        } else if (proceso.equals("auth")) {
             //Solicitud de parámetros enviados desde el frontned
             //, uso de request.getParameter("nombre parametro")
             //creación de objeto y llamado a método eliminar
 
-            String id = request.getParameter("id");
+            String email = request.getParameter("email");
+            String pass = request.getParameter("pass");
 
             try {
-                UserModel user = userDao.read(Long.parseLong(id));
+                UserModel user = userDao.logIn(email, pass);
                 respuesta += "\"" + proceso + "\": true,\"user\":" + new Gson().toJson(user);
             } catch (Exception ex) {
-                respuesta += "\"" + proceso + "\": true,\"user\":[]";
+                respuesta += "\"" + proceso + "\": false,\"user\":[]";
                 Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
             }
 

@@ -1,0 +1,43 @@
+﻿<h1>Hola de nuevo {{vm.user.email}}!</h1>
+<h3>Todos los usuarios registrados son:</h3>
+<!--<ul>
+    <li ng-repeat="user in vm.allUsers">
+        {{user.name}} ({{user.email}} {{user.password}})
+        - <a ng-click="vm.deleteUser(user.id)">Delete</a>
+    </li>
+
+
+
+</ul>-->
+<div class="col-12">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">id</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Correo</th>
+                <th scope="col">Password</th>
+                <th scope="col">Tipo de documento</th>
+                <th scope="col">Número de documento</th>
+                <th scope="col">Telefono</th>
+                <th scope="col">Rol</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="user in vm.allUsers" >
+                <td>{{user.id}}</td>
+                <td>{{user.name}}</td>
+                <td>{{user.email}}</td>
+                <td>{{user.password}}</td>
+                <td>{{user.docType}}</td>
+                <td>{{user.document}}</td>
+                <td>{{user.phoneNumber}}</td>
+                <td>{{user.userRol}}</td>
+            </tr>
+        </tbody>
+    </table>  
+</div>
+
+<p>&nbsp;</p>
+<p><a href="#!/login" class="btn btn-primary">Cerrar sesión</a></p>

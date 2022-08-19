@@ -1,0 +1,20 @@
+<div class="wrapper">
+    <img class="image" src="img/logo.png"/>
+    <header>Iniciar de sesión</header>
+    <form name="form" ng-submit="vm.login()" role="form">
+        <div class="form-group" ng-class="{ 'has-error': form.email.$dirty && form.email.$error.required }">
+            <label for="email">Correo electrónico</label>
+            <input type="text" name="email" id="email" class="form-control" ng-model="vm.email" required />
+            <span ng-show="form.email.$dirty && form.email.$error.required" class="help-block">El correo es necesario</span>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': form.password.$dirty && form.password.$error.required }">
+            <label for="password">Contraseña</label>
+            <input type="password" name="password" id="password" class="form-control" ng-model="vm.password" required />
+            <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Password is required</span>
+        </div>
+        <div class="form-actions" style="margin-top: 40px">
+            <button type="submit" ng-disabled="form.$invalid || vm.dataLoading" class="btn btn-primary" style="color: #FFFFFF; background-color: #00d221; border-color: transparent" >Iniciar sesión</button>
+            <a href="#!/register" class="btn btn-link" style="color:  #00d221">Crear cuenta nueva</a>
+        </div>
+    </form>
+</div>

@@ -29,9 +29,8 @@
             </div>
             <div class = "col-6">
 
-                <select class="form-control" ng-model="vm.user.doc_type" >
+                <select class="form-control" ng-model="vm.user.doc_type" ng-options="doc.id as doc.name for doc in vm.allDocsType" >
                     <option value="">Tipo de documento</option> 
-                    <option value="1">CC</option> 
                 </select>
 
             </div>
@@ -47,8 +46,9 @@
             </div>
             <div class = "col-6">
                 <select class="form-control" ng-model="vm.user.rol" >
-                    <option value="">Rol de usuario</option> 
-                    <option value="1">Admin</option> 
+                    <option value="">Rol de usuario</option>        
+                    <option value="2">Usuario</option> 
+                    <option value="3">Empleado</option> 
                 </select>
 
             </div>

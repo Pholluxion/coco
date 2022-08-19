@@ -15,6 +15,7 @@
         service.Create = Create;
         service.Update = Update;
         service.Delete = Delete;
+        service.GetUserDocType = GetUserDocType;
 
         return service;
 
@@ -44,6 +45,16 @@
             return $http({
                 method: 'POST',
                 url: 'apis/users.jsp',
+                params: parametros
+            }).then(handleSuccess, handleError('Error creating user'));
+        }
+
+        function GetUserDocType() {
+            var parametros = {process: 'list'};
+
+            return $http({
+                method: 'POST',
+                url: 'apis/documents.jsp',
                 params: parametros
             }).then(handleSuccess, handleError('Error creating user'));
         }

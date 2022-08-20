@@ -27,7 +27,15 @@ body{
   text-align: center;
   box-shadow: 10px 10px 15px rgba(0,0,0,0.1);
 }
+.wrapper-hm{
+  width: 100%;
 
+  padding: 50px 50px 50px 50px;
+  background: #fff;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 10px 10px 15px rgba(0,0,0,0.1);
+}
 .wrapper header{
   font-size: 35px;
   font-weight: 600;

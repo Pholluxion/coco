@@ -4,8 +4,10 @@
     Author     : nombre autor
 --%>
 
-<%@page import="logic.daos.UserRolDao"%>
-<%@page import="logic.models.UserRolModel"%>
+
+
+<%@page import="logic.daos.ProductDao"%>
+<%@page import="logic.models.ProductModel"%>
 <%@page import="java.util.logging.Logger"%>
 <%@page import="java.util.logging.Level"%>
 <%@page import="com.google.gson.Gson"%>
@@ -25,7 +27,7 @@
         "find"
     });
 
-    UserRolDao userRolDao = UserRolDao.getInstance();
+    ProductDao productDao = ProductDao.getInstance();
 
     String proceso = "" + request.getParameter("process");
 
@@ -35,11 +37,18 @@
         if (proceso.equals("save")) {
 
             String name = request.getParameter("name");
+            String desc = request.getParameter("description");
+            String price = request.getParameter("price");
+            String imageUrl = request.getParameter("image_url");
 
-            UserRolModel userRol = new UserRolModel();
-            userRol.setName(name);
+            ProductModel product = new ProductModel();
 
-            if (userRolDao.create(userRol)) {
+            product.setName(name);
+            product.setDescription(desc);
+            product.setPrice(price);
+            product.setImageUrl(imageUrl);
+
+            if (productDao.create(product)) {
                 respuesta += "\"" + proceso + "\": true";
             } else {
                 respuesta += "\"" + proceso + "\": false";
@@ -47,9 +56,9 @@
 
         } else if (proceso.equals("del")) {
 
-            String idUserRol = request.getParameter("id");
+            String id = request.getParameter("id");
 
-            if (userRolDao.delete(Integer.parseInt(idUserRol))) {
+            if (productDao.delete(id)) {
                 respuesta += "\"" + proceso + "\": true";
             } else {
                 respuesta += "\"" + proceso + "\": false";
@@ -58,34 +67,42 @@
         } else if (proceso.equals("list")) {
 
             try {
-                List<UserRolModel> lista = userRolDao.readAll();
-                respuesta += "\"" + proceso + "\": true,\"listUserRol\":" + new Gson().toJson(lista);
+                List<ProductModel> lista = productDao.readAll();
+                respuesta += "\"" + proceso + "\": true,\"listProduct\":" + new Gson().toJson(lista);
             } catch (Exception ex) {
-                respuesta += "\"" + proceso + "\": true,\"listUserRol\":[]";
-                Logger.getLogger(UserRolDao.class.getName()).log(Level.SEVERE, null, ex);
+                respuesta += "\"" + proceso + "\": true,\"listProduct\":[]";
+                Logger.getLogger(ProductDao.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if (proceso.equals("update")) {
 
-            String idUserRol = request.getParameter("id");
-            String nameUserRol = request.getParameter("name");
+            String id = request.getParameter("id");
+            String name = request.getParameter("name");
+            String desc = request.getParameter("description");
+            String price = request.getParameter("price");
+            String imageUrl = request.getParameter("image_url");
 
-            UserRolModel userRol = new UserRolModel(Integer.parseInt(idUserRol), nameUserRol);
+            ProductModel product = new ProductModel();
 
-            if (userRolDao.update(userRol, userRol.getId())) {
+            product.setName(name);
+            product.setDescription(desc);
+            product.setPrice(price);
+            product.setImageUrl(imageUrl);
+
+            if (productDao.update(product, id)) {
                 respuesta += "\"" + proceso + "\": true";
             } else {
                 respuesta += "\"" + proceso + "\": false";
             }
         } else if (proceso.equals("find")) {
 
-            String idUserRol = request.getParameter("id");
+            String id = request.getParameter("id");
 
             try {
-                UserRolModel userRol = userRolDao.read(Integer.parseInt(idUserRol));
-                respuesta += "\"" + proceso + "\": true,\"userRol\":" + new Gson().toJson(userRol);
+                ProductModel docType = productDao.read(id);
+                respuesta += "\"" + proceso + "\": true,\"product\":" + new Gson().toJson(docType);
             } catch (Exception ex) {
-                respuesta += "\"" + proceso + "\": true,\"userRol\":[]";
-                Logger.getLogger(UserRolDao.class.getName()).log(Level.SEVERE, null, ex);
+                respuesta += "\"" + proceso + "\": false,\"product\":[]";
+                Logger.getLogger(ProductDao.class.getName()).log(Level.SEVERE, null, ex);
             }
 
         }

@@ -24,7 +24,8 @@
         "del",
         "update",
         "list",
-        "find"
+        "find",
+        "getUserProd"
     });
 
     ProductDao productDao = ProductDao.getInstance();
@@ -73,7 +74,18 @@
                 respuesta += "\"" + proceso + "\": true,\"listProduct\":[]";
                 Logger.getLogger(ProductDao.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } else if (proceso.equals("update")) {
+        } else if (proceso.equals("getUserProd")) {
+            
+             String id = request.getParameter("id");
+
+            try {
+                List<ProductModel> lista = productDao.readAllByUserId(id);
+                respuesta += "\"" + proceso + "\": true,\"listProduct\":" + new Gson().toJson(lista);
+            } catch (Exception ex) {
+                respuesta += "\"" + proceso + "\": true,\"listProduct\":[]";
+                Logger.getLogger(ProductDao.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }else if (proceso.equals("update")) {
 
             String id = request.getParameter("id");
             String name = request.getParameter("name");

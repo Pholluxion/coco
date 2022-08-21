@@ -3,6 +3,7 @@ package logic.daos;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -80,6 +81,30 @@ public class ProductDao implements GenericDao<ProductModel, String> {
                 p.setImageUrl(data.getString("image_url"));
                 products.add(p);
             }
+            Collections.shuffle(products);
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return products;
+    }
+    
+
+    public List<ProductModel> readAllByUserId(String id) {
+        products.clear();
+        try {
+            ResultSet data = (ResultSet) ProductDao.connection.read(this.getReadByUserIdQuery(id));
+            
+            while (data.next()) {
+                ProductModel p = new ProductModel();
+                p.setId(Integer.parseInt(data.getString("id")));
+                p.setName(data.getString("name"));
+                p.setDescription(data.getString("description"));
+                p.setPrice(data.getString("price"));
+                p.setImageUrl(data.getString("image_url"));
+                products.add(p);
+            }
+            Collections.shuffle(products);
             
         } catch (SQLException ex) {
             Logger.getLogger(ProductDao.class.getName()).log(Level.SEVERE, null, ex);
@@ -118,4 +143,8 @@ public class ProductDao implements GenericDao<ProductModel, String> {
         return "SELECT * FROM product;";
     }
     
+     private String getReadByUserIdQuery(String id) {
+        return "SELECT * FROM product p INNER JOIN product_user up ON p.id = up.id_product where up.id_user = "+id+";";
+    }
+
 }

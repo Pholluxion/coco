@@ -3,24 +3,18 @@
 
     angular
             .module('app')
-            .controller('HomeController', HomeController);
+            .controller('ProfileController', ProfileController);
 
-    HomeController.$inject = ['UserService', '$rootScope', 'FlashService', '$location'];
-    function HomeController(UserService, $rootScope, FlashService, $location) {
+    ProfileController.$inject = ['UserService', '$rootScope', 'FlashService', '$location'];
+    function ProfileController(UserService, $rootScope, FlashService, $location) {
         var vm = this;
 
         vm.user = null;
         vm.deleteUser = deleteUser;
         vm.showModal = showModal;
         vm.createNewProduct = createNewProduct;
-        vm.gotoPerfil = gotoPerfil;
-
-        
         initController();
-
-        function gotoPerfil() {
-            $location.path('/profile');
-        }
+        vm.gotoHome = gotoHome;
 
         function gotoHome() {
             $location.path('/');
@@ -49,10 +43,14 @@
         }
 
         function loadAllProducts() {
-            UserService.GetAllProducts()
+            UserService.GetProductByUserId(vm.user.id)
                     .then(function (product) {
                         vm.allProducts = product.listProduct;
-                        console.log(product);
+                        if (product.listProduct.length === 0) {
+                            vm.valProducts = false;
+                        } else {
+                            vm.valProducts = true;
+                        }
                     });
         }
 
@@ -105,7 +103,7 @@
                         vm.newProductImg = null;
                         vm.newProductDescription = null;
                         vm.newProductCategory = null;
-                        
+
                         gotoHome();
 
                     });

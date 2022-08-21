@@ -23,7 +23,8 @@
         "del",
         "update",
         "list",
-        "auth"
+        "auth",
+        "getById"
     });
 
     UserDao userDao = UserDao.getInstance();
@@ -113,6 +114,19 @@
 
             try {
                 UserModel user = userDao.logIn(email, pass);
+                respuesta += "\"" + proceso + "\": true,\"user\":" + new Gson().toJson(user);
+            } catch (Exception ex) {
+                respuesta += "\"" + proceso + "\": false,\"user\":[]";
+                Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        } else if (proceso.equals("getById")) {
+
+            String id = request.getParameter("id");
+
+            try {
+                UserModel user = userDao.read(id);
+                System.out.println(user.getName());
                 respuesta += "\"" + proceso + "\": true,\"user\":" + new Gson().toJson(user);
             } catch (Exception ex) {
                 respuesta += "\"" + proceso + "\": false,\"user\":[]";

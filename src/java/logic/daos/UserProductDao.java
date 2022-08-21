@@ -72,7 +72,7 @@ public class UserProductDao implements GenericDao<UserProductModel, Integer> {
                 UserProductModel useProduct = new UserProductModel();
                 useProduct.setId(data.getInt("id"));
                 useProduct.setId_user(data.getInt("id_user"));
-                useProduct.setId_user(data.getInt("id_product"));
+                useProduct.setId_product(data.getInt("id_product"));
                 products.add(useProduct);
             }
 
@@ -82,23 +82,39 @@ public class UserProductDao implements GenericDao<UserProductModel, Integer> {
         return products;
     }
 
+    public int getLast() {
+        int id = 0;
+        try {
+            ResultSet data = (ResultSet) UserProductDao.connection.read(this.getLastId());
+            while (data.next()) {
+
+                id = data.getInt("id");
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(UserProductDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return id;
+    }
+
     private String getReadQuery(int id) {
         return "SELECT * FROM product_user WHERE id = " + id + ";";
     }
 
     private String getInsertQuery(UserProductModel model) {
+        int idProduct = getLast();
         return "INSERT INTO product_user (id_user, id_product) "
                 + "VALUES("
-                + ""+model.getId_user()+", "
-                + ""+model.getId_product()+""
+                + "" + model.getId_user() + ", "
+                + "" + idProduct + ""
                 + ");";
     }
 
     private String getUpdateQuery(UserProductModel model, Integer id) {
         return "UPDATE product_user SET "
-                + "id_user="+model.getId_user()+", "
-                + "id_product="+model.getId_product()+" "
-                + "WHERE id="+id+";";
+                + "id_user=" + model.getId_user() + ", "
+                + "id_product=" + model.getId_product() + " "
+                + "WHERE id=" + id + ";";
     }
 
     private String getDeleteQuery(Integer id) {
@@ -107,6 +123,10 @@ public class UserProductDao implements GenericDao<UserProductModel, Integer> {
 
     private String getReadAllQuery() {
         return "SELECT * FROM product_user;";
+    }
+
+    private String getLastId() {
+        return "SELECT MAX(id) AS id FROM product;";
     }
 
 }

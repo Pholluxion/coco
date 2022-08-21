@@ -37,12 +37,11 @@
         if (proceso.equals("save")) {
 
             String user = request.getParameter("id_category");
-            String prod = request.getParameter("id_product");
 
             ProductCategoryModel product = new ProductCategoryModel();
 
             product.setId_category(Integer.valueOf(user));
-            product.setId_product(Integer.valueOf(prod));
+            product.setId_product(Integer.valueOf(0));
 
             if (productDao.create(product)) {
                 respuesta += "\"" + proceso + "\": true";

@@ -16,6 +16,13 @@
         service.Update = Update;
         service.Delete = Delete;
         service.GetUserDocType = GetUserDocType;
+        service.GetAllProducts = GetAllProducts;
+        service.GetAllUserProducts = GetAllUserProducts;
+        service.GetAllCategories = GetAllCategories;
+        service.CreateProduct = CreateProduct;
+        service.CreateUserProduct = CreateUserProduct;
+        service.CreateProductCategory = CreateProductCategory;
+        service.GetProductByUserId = GetProductByUserId;
 
         return service;
 
@@ -29,12 +36,52 @@
 
         }
 
-        function GetById(email, password) {
-            var parametros = {process: 'auth', email: email, pass: password};
+        function GetAllProducts() {
+            var parametros = {process: 'list'};
+            return $http({
+                method: 'POST',
+                url: 'apis/products.jsp',
+                params: parametros
+            }).then(handleSuccess, handleError('Error creating user'));
+
+        }
+
+        function GetAllCategories() {
+            var parametros = {process: 'list'};
+            return $http({
+                method: 'POST',
+                url: 'apis/categories.jsp',
+                params: parametros
+            }).then(handleSuccess, handleError('Error creating user'));
+
+        }
+
+        function GetAllUserProducts() {
+            var parametros = {process: 'list'};
+            return $http({
+                method: 'POST',
+                url: 'apis/products_user.jsp',
+                params: parametros
+            }).then(handleSuccess, handleError('Error creating user'));
+
+        }
+
+        function GetById(id) {
+            var parametros = {process: 'getById', id: id};
 
             return $http({
                 method: 'POST',
                 url: 'apis/users.jsp',
+                params: parametros
+            }).then(handleSuccess, handleError('Error creating user'));
+        }
+        
+         function GetProductByUserId(id) {
+            var parametros = {process: 'getUserProd', id: id};
+
+            return $http({
+                method: 'POST',
+                url: 'apis/products.jsp',
                 params: parametros
             }).then(handleSuccess, handleError('Error creating user'));
         }
@@ -75,6 +122,54 @@
             return $http({
                 method: 'POST',
                 url: 'apis/users.jsp',
+                params: parametros
+            }).then(handleSuccess, handleError('Error creating user'));
+
+        }
+
+        function CreateProduct(name, price, imageUrl, description) {
+
+            var parametros = {
+                process: 'save',
+                name: name,
+                description: description,
+                price: price,
+                image_url: imageUrl
+            };
+
+            return $http({
+                method: 'POST',
+                url: 'apis/products.jsp',
+                params: parametros
+            }).then(handleSuccess, handleError('Error creating user'));
+
+        }
+        
+         function CreateUserProduct(idUser) {
+
+            var parametros = {
+                process: 'save',
+                id_user: idUser
+            };
+
+            return $http({
+                method: 'POST',
+                url: 'apis/products_user.jsp',
+                params: parametros
+            }).then(handleSuccess, handleError('Error creating user'));
+
+        }
+        
+         function CreateProductCategory(idCat) {
+
+            var parametros = {
+                process: 'save',
+                id_category: idCat
+            };
+
+            return $http({
+                method: 'POST',
+                url: 'apis/products_category.jsp',
                 params: parametros
             }).then(handleSuccess, handleError('Error creating user'));
 

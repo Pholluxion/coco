@@ -26,6 +26,12 @@
                 templateUrl: 'register/register.view.html',
                 controllerAs: 'vm'
             })
+            
+            .when('/profile', {
+                controller: 'ProfileController',
+                templateUrl: 'profile/profile.view.html',
+                controllerAs: 'vm'
+            })
 
             .otherwise({ redirectTo: '/login' });
     }

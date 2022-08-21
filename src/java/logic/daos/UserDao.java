@@ -34,8 +34,8 @@ public class UserDao implements GenericDao<UserModel, String> {
     }
 
     @Override
-    public UserModel read(String email) {
-        ResultSet data = (ResultSet) UserDao.connection.read(this.getReadQuery(email));
+    public UserModel read(String id) {
+        ResultSet data = (ResultSet) UserDao.connection.read(this.getReadByIdQuery(id));
         try {
             if (data.next()) {
                 user = new UserModel();
@@ -96,8 +96,8 @@ public class UserDao implements GenericDao<UserModel, String> {
         return users;
     }
 
-    private String getReadQuery(String email) {
-        return "SELECT * FROM user WHERE email = " + email + ";";
+    private String getReadByIdQuery(String id) {
+        return "SELECT * FROM user usr INNER JOIN product_user up ON usr.id = up.id_user where up.id_product = " + id + ";";
     }
 
     private String getInsertQuery(UserModel user) {

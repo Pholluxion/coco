@@ -82,15 +82,31 @@ public class ProductCategoryDao implements GenericDao<ProductCategoryModel, Inte
         return products;
     }
 
+    public int getLast() {
+        int id = 0;
+        try {
+            ResultSet data = (ResultSet) ProductCategoryDao.connection.read(this.getLastId());
+            while (data.next()) {
+
+                id = data.getInt("id");
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(UserProductDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return id;
+    }
+
     private String getReadQuery(int id) {
         return "SELECT * FROM product_category WHERE id = " + id + ";";
     }
 
     private String getInsertQuery(ProductCategoryModel model) {
+        int idProduct = getLast();
         return "INSERT INTO product_category (id_category, id_product) "
                 + "VALUES("
                 + "" + model.getId_category() + ", "
-                + "" + model.getId_product() + ""
+                + "" + idProduct+ ""
                 + ");";
     }
 
@@ -107,6 +123,10 @@ public class ProductCategoryDao implements GenericDao<ProductCategoryModel, Inte
 
     private String getReadAllQuery() {
         return "SELECT * FROM product_category;";
+    }
+
+    private String getLastId() {
+        return "SELECT MAX(id) AS id FROM product;";
     }
 
 }

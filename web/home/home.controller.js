@@ -12,10 +12,9 @@
         vm.user = null;
         vm.deleteUser = deleteUser;
         vm.showModal = showModal;
-        vm.createNewProduct = createNewProduct;
         vm.gotoPerfil = gotoPerfil;
 
-        
+
         initController();
 
         function gotoPerfil() {
@@ -52,6 +51,11 @@
             UserService.GetAllProducts()
                     .then(function (product) {
                         vm.allProducts = product.listProduct;
+                        if (product.listProduct.length === 0) {
+                            vm.valProducts = false;
+                        } else {
+                            vm.valProducts = true;
+                        }
                         console.log(product);
                     });
         }
@@ -79,37 +83,6 @@
                     });
         }
 
-        function createNewProduct() {
-            UserService.CreateProduct(vm.newProductName, vm.newProductPrice, vm.newProductImg, vm.newProductDescription)
-                    .then(function (data) {
-                        if (data.ok) {
-                            UserService.CreateUserProduct(vm.user.id).then(function (data) {
-                                if (data.ok) {
-                                    console.log(data.ok);
-                                }
-
-                            });
-                            UserService.CreateProductCategory(vm.newProductCategory).then(function (data) {
-                                if (data.ok) {
-                                    console.log(data.ok);
-                                }
-
-                            });
-                            loadAllUserProducts();
-                            $location.path('/');
-                            FlashService.Success('Nuevo producto agregado exitoso', true);
-                        }
-
-                        vm.newProductName = null;
-                        vm.newProductPrice = null;
-                        vm.newProductImg = null;
-                        vm.newProductDescription = null;
-                        vm.newProductCategory = null;
-                        
-                        gotoHome();
-
-                    });
-        }
 
         function showModal(p) {
             vm.idSeller = null;

@@ -9,24 +9,23 @@
                         <img src="img/logo.png" width="100" height="50" alt="">
 
                     </a>
+                    <a class="nav-link"  style="color: #00d221;" href="#">Home<span class="sr-only">(current)</span></a>
                     <a class="btn btn-primary " style="color: #00d221; background-color: #FFF;border-color: transparent" data-toggle="modal" data-target="#crudModal">Publicar</a>
                     <a class="btn btn-primary " style="color: #00d221; background-color: #FFF;border-color: transparent">Posts</a>
-                    <a class="btn btn-primary " style="color: #fff; background-color: #00d221;border-color: transparent" ng-click="vm.gotoPerfil()">Perfil</a>
+                    <a class="btn btn-primary " style="margin: 0 ;color: #fff; background-color: #00d221;border-color: transparent" ng-click="vm.gotoPerfil()">Perfil</a>
                     <a class="btn btn-primary " style="color: #00d221; background-color: #FFF;border-color: transparent">acerca de</a>
                     <a href="#!/login" class="btn btn-primary btn-sm" style="color: #00d221; background-color: #FFF;border-color: transparent">Cerrar sesión</a>
-
                 </nav>
             </div>
         </div>
-        <div ng-class="{ 'alert': flash, 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }" ng-if="flash" ng-bind="flash.message"></div>
 
         <div class="row" >
 
-            <div class="col-12 wrapper" style="height: 85vh;width: 90vw" >
+            <div class="col-12 " style="height: 90vh;width: 90vw" >
 
-                <div class="row" style="margin: 30px; height: 90%">
+                <div class="row" style="margin: 30px; height:90%">
                     <div class="col-lg-4">
-                        <div class="card mb-4" style="height: 70vh">
+                        <div class="card mb-4" style="height: 80vh;width: auto">
                             <div class="card-body text-center">
                                 <img src="https://cdn-icons-png.flaticon.com/512/4645/4645949.png" alt="avatar"
                                      class="rounded-circle img-fluid" style="width: 150px;">
@@ -38,24 +37,25 @@
                         </div>
 
                     </div>
-                    <div class="col-8" ng-if="vm.valProducts" style="overflow-y: scroll; height: 75vh;width: 90vw" >
+                    <div class="col-8" ng-if="vm.valProducts" style="overflow-y: scroll; height: 80vh;width: 90vw" >
 
+                        <div ng-class="{ 'alert': flash, 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }" ng-if="flash" ng-bind="flash.message"></div>
                         <div class="row row-cols-3">
 
                             <div class="col" ng-repeat="product in vm.allProducts">
-                                <div class="card" style="margin-bottom:20px; height:20vw; width:30vh; border-radius: 20px;" ng-click="vm.showModal(product)" data-toggle="modal" data-target="#myModal">
-                                    <div class="card-body">
-                                        <img  src="{{product.imageUrl}}" class="responsive" alt="{{product.name}}" >
-                                        <p class="card-title">{{product.name}}</p>
-                                        <p class="card-subtitle text-muted" style="font-size:small ">${{product.price}}</p>
-                                        <div style="margin: 10px">
-                                            <p class="card-text text-muted myoverflow" style="font-size:x-small;margin: 10px;text-overflow: ellipsis; ">{{product.description}}</p>
+                                <div class="card" style=" height:20vw; width:30vh; border-radius: 20px;" >
+                                    <div >
+                                        <button type="button" class="btn btn-danger" ng-click="vm.deleteProduct(product.id)" >&times;</button>
+                                    </div>
+                                    <div class="card-body"ng-click="vm.showModal(product)" data-toggle="modal" data-target="#myModal">
+                                        <div style="margin: 20px">
+                                            <img  ng-src="{{product.imageUrl}}" class="img-fluid" alt="{{product.name}}" style="border-radius: 20px;margin-bottom: 20px">
+                                            <p class="card-title">{{product.name}}</p>
+                                            <p class="card-subtitle text-muted" style="font-size:large ">${{product.price}}</p>
+                                            <p class="card-text text-muted myoverflow" style="font-size:x-small;margin-bottom: 30px;text-overflow: ellipsis; ">{{product.description}}</p>
                                         </div>
                                     </div>
-                                    <div class="btn-group btn-group-sm" role="group" style="margin-bottom: 25px;margin-left: 30px;margin-right: 30px">
-                                        <button type="button" class="btn btn-warning">Editar</button>
-                                        <button type="button" class="btn btn-danger">Borrar</button>
-                                    </div>
+
                                 </div>
                             </div>
 
@@ -78,16 +78,60 @@
 
 
 
-<div class="modal fade" id="crudModal">
-    <div class="modal-dialog">
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
 
             <!-- Modal Header -->
             <div class="modal-header">
+                <h4 class="modal-title">{{vm.selectProductName}}</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
 
             <!-- Modal body -->
+            <div class="modal-body">
+
+
+                <div style="margin: 20px">
+                    <img  src="{{vm.selectProductImg}}" class="card-img-top " alt="{{vm.selectProductName}}" style="border-radius: 20px;margin-bottom: 20px" >
+
+                    <form >
+                        <div class="form-group">
+                            <input type="text" value="{{vm.selectProductName}}" class="form-control" id="name" placeholder="{{vm.selectProductName}}" ng-model="vm.updateProductName">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" value="{{vm.selectProductPrice}}" class="form-control" id="price" placeholder="${{vm.selectProductPrice}}" ng-model="vm.updateProductPrice">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" value="{{vm.selectProductImg}}" class="form-control" id="imageUrl" placeholder="{{vm.selectProductImg}}" ng-model="vm.updateProductImg">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="description">Descripción</label>
+                            <textarea class="form-control input-area" value='{{vm.selectProductDes}}' id="description" rows="3" placeholder="{{vm.selectProductDes}}" ng-model="vm.updateProductDescription"></textarea>
+                        </div>
+                    </form>
+                    <button href="#" type="button" class="btn btn-warning" style="color: #fff; background-color: #00d221;border-color: transparent;width: 100%" data-dismiss="modal" ng-click="vm.updateProduct()">Editar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="crudModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+
+            <div class="modal-header">
+                <div class="container" style="width: 100%;height: auto; display: flex;justify-content: center;">
+                    <img src="img/logo.png"  height="100" alt="">
+                </div>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+
             <div class="modal-body">
                 <form style="margin: 20px">
                     <div class="form-group">
@@ -117,8 +161,6 @@
                     </div>
                 </form>
             </div>
-
-
         </div>
     </div>
 </div>

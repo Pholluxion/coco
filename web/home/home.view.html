@@ -4,12 +4,12 @@
 
         <div class="row" style="margin-top: 10px;margin-bottom: 10px" >
             <div class="col-12">
-                <nav class="navbar navbar-light"  style="background-color: #fff; color: #00d221 ;border-radius: 10px">
+                <nav class="navbar navbar-light"  style="background-color: #fff; color: #00d221 ;border-radius: 10px;">
                     <a class="navbar-brand" href="#">
                         <img src="img/logo.png" width="100" height="50" alt="">
 
                     </a>
-                    <a class="btn btn-primary " style="color: #00d221; background-color: #FFF;border-color: transparent"  data-toggle="modal" data-target="#crudModal">Publicar</a>
+
                     <a class="btn btn-primary " style="color: #00d221; background-color: #FFF;border-color: transparent">Posts</a>
                     <a class="btn btn-primary " style="color: #00d221; background-color: #FFF;border-color: transparent" ng-click="vm.gotoPerfil()">Perfil</a>
                     <a class="btn btn-primary " style="color: #00d221; background-color: #FFF;border-color: transparent">acerca de</a>
@@ -22,21 +22,25 @@
 
         <div class="row" >
 
-            <div class="col-12" style="overflow-y: scroll; height: 85vh;width: 90vw" >
+            <div class="col-12" style="overflow-y: scroll; height: 90vh;width: 90vw" >
 
                 <div class="row row-cols-5">
 
                     <div class="col" ng-repeat="product in vm.allProducts">
                         <div class="card" style="margin-bottom:20px; height:20vw; width:33vh; border-radius: 20px;" ng-click="vm.showModal(product)" data-toggle="modal" data-target="#myModal">
                             <div class="card-body">
-                                <img  src="{{product.imageUrl}}" class="responsive" alt="{{product.name}}" >
-                                <p class="card-title">{{product.name}}</p>
-                                <p class="card-subtitle text-muted" style="font-size:small ">${{product.price}}</p>
-                                <div style="margin: 10px">
-                                    <p class="card-text text-muted myoverflow" style="font-size:x-small;margin: 10px;text-overflow: ellipsis; ">{{product.description}}</p>
+                                <div style="margin: 20px">
+                                    <img  ng-src="{{product.imageUrl}}" class="img-fluid" alt="{{product.name}}"  style="border-radius: 20px;margin-bottom: 20px">
+                                    <h5 class="card-title">{{product.name}}</h5>
+                                    <p class="card-subtitle text-muted" style="font-size:large;margin-bottom: 10px">${{product.price}}</p>
+                                    <p class="card-text text-muted myoverflow" style="font-size:x-small;margin-bottom: 30px;text-overflow: ellipsis; ">{{product.description}}</p>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    
+                    <div class="col-12" ng-if="!vm.valProducts" style="display: flex;flex-direction: column;justify-content: center;text-align: center; height: 75vh;width: 90vw; align-items: center;align-items: center">
+                        <h4>Aún no hay productos a la venta</h4>
                     </div>
 
                 </div>
@@ -51,7 +55,7 @@
 
 
 <div class="modal fade" id="myModal">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
 
             <!-- Modal Header -->
@@ -63,12 +67,13 @@
             <!-- Modal body -->
             <div class="modal-body">
 
-                <img  src="{{vm.selectProductImg}}" class="card-img-top responsive" alt="{{vm.selectProductName}}" >
+                <img  src="{{vm.selectProductImg}}" class="card-img-top " alt="{{vm.selectProductName}}" style="border-radius: 20px;margin-bottom: 20px" >
 
-                <div class="card-body">
-                    <p class="card-text" style="font-size:small ">{{vm.selectProductDes}}</p>
-                    <h5 class="card-text" style="font-size:small ">${{vm.selectProductPrice}}</h5>
-                    <h6 class="card-text" style="font-size:small ">Vendido por: {{vm.seller.name}}</h6>
+                <div style="margin: 20px">
+
+                    <p class="card-subtitle text-muted" style="font-size:larger ">${{vm.selectProductPrice}}</p>
+                    <p class="card-text text-muted" style="overflow-y: scroll;font-size:x-small;margin: 10px;text-overflow: ellipsis; ">{{vm.selectProductDes}}</p>
+                    <p class="card-title">Vendido por: {{vm.seller.name}}</p>
                 </div>
 
             </div>
@@ -77,47 +82,3 @@
 </div>
 
 
-<div class="modal fade" id="crudModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-
-            <!-- Modal Header -->
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-
-            <!-- Modal body -->
-            <div class="modal-body">
-                <form style="margin: 20px">
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="name" placeholder="Nombre del producto o servicio" ng-model="vm.newProductName">
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="price" placeholder="$Precio" ng-model="vm.newProductPrice">
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="imageUrl" placeholder="URL" ng-model="vm.newProductImg">
-                    </div>
-                    <div class="form-group">
-
-                        <select class="form-control" ng-model="vm.newProductCategory" ng-options="cat.id as cat.name for cat in vm.allCategories" >
-                            <option value="">Categoria</option> 
-                        </select>
-
-                    </div>
-
-                    <div class="form-group">
-                        <label for="description">Descripción</label>
-                        <textarea class="form-control" id="description" rows="3" ng-model="vm.newProductDescription"></textarea>
-                    </div>
-
-                    <div >
-                        <button href="#" type="button" class="btn btn-primary" ng-click="vm.createNewProduct()" data-dismiss="modal" style="width: 100%;background-color: #00d221; border-color: #fff">Publicar</button>
-                    </div>
-                </form>
-            </div>
-
-
-        </div>
-    </div>
-</div>

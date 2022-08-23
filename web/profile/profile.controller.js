@@ -5,16 +5,19 @@
             .module('app')
             .controller('ProfileController', ProfileController);
 
-    ProfileController.$inject = ['UserService', '$rootScope', 'FlashService', '$location'];
-    function ProfileController(UserService, $rootScope, FlashService, $location) {
+    ProfileController.$inject = ['UserService', '$rootScope', 'FlashService', '$location', '$scope', '$route'];
+    function ProfileController(UserService, $rootScope, FlashService, $location, $scope, $route) {
         var vm = this;
 
         vm.user = null;
-        vm.deleteUser = deleteUser;
-        vm.showModal = showModal;
-        vm.createNewProduct = createNewProduct;
-        initController();
         vm.gotoHome = gotoHome;
+        vm.showModal = showModal;
+        vm.deleteProduct = deleteProduct;
+        vm.createNewProduct = createNewProduct;
+        vm.updateProduct = updateProduct;
+        initController();
+
+
 
         function gotoHome() {
             $location.path('/');
@@ -70,10 +73,11 @@
                     });
         }
 
-        function deleteUser(id) {
-            UserService.Delete(id)
+        function deleteProduct(id) {
+            UserService.DeleteProduct(id)
                     .then(function () {
-                        loadAllUsers();
+                        loadAllProducts();
+                        $location.path('/profile');
                     });
         }
 
@@ -109,13 +113,44 @@
                     });
         }
 
+        function updateProduct() {
+
+            UserService.UpdateProduct(vm.selectProductId, vm.updateProductName, vm.updateProductPrice, vm.updateProductImg, vm.updateProductDescription)
+                    .then(function (data) {
+                        if (data.ok) {
+
+                            UserService.CreateProductCategory(vm.newProductCategory).then(function (data) {
+                                if (data.ok) {
+                                    console.log(data.ok);
+                                }
+
+                            });
+                            $route.reload();
+                            loadAllUserProducts();
+
+
+
+                        }
+
+                    });
+        }
+
+
         function showModal(p) {
             vm.idSeller = null;
+            vm.selectProductId = p.id;
             vm.selectProductName = p.name;
             vm.selectProductImg = p.imageUrl;
             vm.selectProductDes = p.description;
             vm.selectProductPrice = p.price;
 
+            vm.selectProductId = p.id;
+            vm.updateProductImg = p.imageUrl;
+            vm.updateProductName = p.name;
+            vm.updateProductPrice = p.price;
+            vm.updateProductDescription = p.description;
+
+            console.log(p);
             UserService.GetById(p.id)
                     .then(function (user) {
                         vm.seller = user.user;

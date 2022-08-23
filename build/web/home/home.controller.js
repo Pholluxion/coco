@@ -5,25 +5,23 @@
             .module('app')
             .controller('HomeController', HomeController);
 
-    HomeController.$inject = ['UserService', '$rootScope', 'FlashService', '$location'];
-    function HomeController(UserService, $rootScope, FlashService, $location) {
+    HomeController.$inject = ['UserService', '$rootScope', 'FlashService', '$location', '$cookies', '$timeout'];
+    function HomeController(UserService, $rootScope, FlashService, $location, $cookies, $timeout) {
         var vm = this;
 
         vm.user = null;
+        vm.carList = [];
+
         vm.deleteUser = deleteUser;
         vm.showModal = showModal;
         vm.gotoPerfil = gotoPerfil;
+        vm.gotoCart = gotoCart;
+        vm.gotoHome = gotoHome;
+        vm.addToCart = addToCart;
+
 
 
         initController();
-
-        function gotoPerfil() {
-            $location.path('/profile');
-        }
-
-        function gotoHome() {
-            $location.path('/');
-        }
 
         function initController() {
             loadCurrentUser();
@@ -31,8 +29,42 @@
             loadAllProducts();
             loadAllUserProducts();
             loadAllCategories();
+            loadCart();
 
         }
+        function gotoHome() {
+            $location.path('/');
+        }
+        function gotoCart() {
+            $location.path('/cart');
+        }
+        function gotoPerfil() {
+            $location.path('/profile');
+        }
+
+        function loadCart() {
+            if (vm.carList.length === 0) {
+                vm.carListIsEmty = false;
+            } else {
+                vm.carListIsEmty = true;
+            }
+        }
+
+        function addToCart(product) {
+            console.log(vm.carList);
+            vm.carList = $rootScope.cart.cartProducts;
+            vm.carList.push(product);
+
+            $rootScope.cart = {
+                cartProducts: vm.carList
+            };
+
+
+            vm.carList = $rootScope.cart.cartProducts;
+            console.log(vm.carList);
+
+        }
+
 
         function loadCurrentUser() {
             vm.user = $rootScope.globals.currentUser;

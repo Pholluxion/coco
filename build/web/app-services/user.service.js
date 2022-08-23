@@ -13,8 +13,8 @@
         service.GetById = GetById;
         service.GetByUsername = GetByUsername;
         service.Create = Create;
-        service.Update = Update;
         service.UpdateProduct = UpdateProduct;
+        service.UpdateUser = UpdateUser;
         service.Delete = Delete;
         service.DeleteProduct = DeleteProduct;
         service.GetUserDocType = GetUserDocType;
@@ -196,16 +196,9 @@
 
         }
 
-        function Update(user) {
-            if (user.doc_type === "Tipo de documento" || user.doc_type === null) {
-                alert("Seleccione un tipo de docuemento");
-                return;
-            }
+        function UpdateUser(user) {
 
-            if (user.rol === "Rol de usuario" || user.rol === null) {
-                alert("Seleccione un tipo de usuario");
-                return;
-            }
+            console.log("Update", user);
 
             var parametros = {
                 process: 'update',
@@ -214,9 +207,9 @@
                 email: user.email,
                 pass: user.password,
                 doc: user.document,
-                tel: user.phone_number,
-                dtype: user.doc_type,
-                rol: user.rol
+                tel: user.phoneNumber,
+                dtype: user.docType,
+                rol: user.userRol
             };
 
             $http({

@@ -10,18 +10,27 @@
         var vm = this;
 
         vm.user = null;
-        vm.gotoHome = gotoHome;
         vm.showModal = showModal;
         vm.deleteProduct = deleteProduct;
         vm.createNewProduct = createNewProduct;
         vm.updateProduct = updateProduct;
+        vm.updateUser = updateUser;
+        vm.allDocsType = null;
         initController();
 
+        vm.gotoHome = gotoHome;
+        vm.gotoCart = gotoCart;
 
 
         function gotoHome() {
             $location.path('/');
         }
+
+        function gotoCart() {
+            $location.path('/cart');
+        }
+
+
 
         function initController() {
             loadCurrentUser();
@@ -29,6 +38,8 @@
             loadAllProducts();
             loadAllUserProducts();
             loadAllCategories();
+            loadAllDocs();
+
 
         }
 
@@ -120,21 +131,27 @@
                         if (data.ok) {
 
                             UserService.CreateProductCategory(vm.newProductCategory).then(function (data) {
-                                if (data.ok) {
-                                    console.log(data.ok);
-                                }
 
                             });
-                            $route.reload();
                             loadAllUserProducts();
-
-
-
+                            $route.reload();
                         }
 
                     });
         }
+        function updateUser() {
 
+            UserService.UpdateUser(vm.user);
+            $location.path('/login');
+                   
+        }
+        function loadAllDocs() {
+            UserService.GetUserDocType()
+                    .then(function (users) {
+                        console.log(users);
+                        vm.allDocsType = users.listDocType;
+                    });
+        }
 
         function showModal(p) {
             vm.idSeller = null;

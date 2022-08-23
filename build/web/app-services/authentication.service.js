@@ -34,13 +34,19 @@
                 currentUser: user
             };
 
-            // set default auth header for http requests
             $http.defaults.headers.common['Authorization'] = 'Basic ' + authdata;
 
-            // store user details in globals cookie that keeps user logged in for 1 week (or until they logout)
             var cookieExp = new Date();
             cookieExp.setDate(cookieExp.getDate() + 7);
             $cookies.putObject('globals', $rootScope.globals, {expires: cookieExp});
+
+            $rootScope.cart = {
+                cartProducts: []
+            };
+
+            var cookieExp = new Date();
+            cookieExp.setDate(cookieExp.getDate() + 7);
+            $cookies.putObject('cart', $rootScope.cart, {expires: cookieExp});
         }
 
         function ClearCredentials() {

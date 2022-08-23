@@ -7,32 +7,84 @@
                 <nav class="navbar navbar-light"  style="background-color: #fff; color: #00d221 ;border-radius: 10px">
                     <a class="navbar-brand" href="#">
                         <img src="img/logo.png" width="100" height="50" alt="">
-
                     </a>
                     <a class="nav-link"  style="color: #00d221;" href="#">Home<span class="sr-only">(current)</span></a>
-                    <a class="btn btn-primary " style="color: #00d221; background-color: #FFF;border-color: transparent" data-toggle="modal" data-target="#crudModal">Publicar</a>
-                    <a class="btn btn-primary " style="color: #00d221; background-color: #FFF;border-color: transparent">Posts</a>
-                    <a class="btn btn-primary " style="margin: 0 ;color: #fff; background-color: #00d221;border-color: transparent" ng-click="vm.gotoPerfil()">Perfil</a>
-                    <a class="btn btn-primary " style="color: #00d221; background-color: #FFF;border-color: transparent">acerca de</a>
-                    <a href="#!/login" class="btn btn-primary btn-sm" style="color: #00d221; background-color: #FFF;border-color: transparent">Cerrar sesión</a>
+                    <a class="btn btn-primary " style="color: #00d221; background-color: #FFF;border-color: transparent">Foro</a>
+                    <a class="btn btn-primary " style="color: #fff; background-color: #00d221;border-color: transparent" ng-click="vm.gotoPerfil()">Perfil</a>
+                    <a class="btn btn-primary " style="color: #00d221; background-color: #FFF;border-color: transparent" ng-click="vm.gotoCart()">Carrito</a>
+                    <a href="#!/login" class="btn btn-primary btn-sm" style="color: #fff; background-color: #bfbfbf;border-color: transparent">Cerrar sesión</a>
                 </nav>
             </div>
         </div>
 
         <div class="row" >
 
-            <div class="col-12 " style="height: 90vh;width: 90vw" >
+            <div class="col-12 " style="height: 90vh;width: 95vw" >
 
-                <div class="row" style="margin: 30px; height:90%">
+                <div class="row" style="width: 100%; height:90%">
                     <div class="col-lg-4">
                         <div class="card mb-4" style="height: 80vh;width: auto">
-                            <div class="card-body text-center">
-                                <img src="https://cdn-icons-png.flaticon.com/512/4645/4645949.png" alt="avatar"
+                            <div class="card-body text-center" style="margin-top: 50px">
+                                <img ng-src="https://cdn-icons-png.flaticon.com/512/4645/4645949.png" alt="avatar"
                                      class="rounded-circle img-fluid" style="width: 150px;">
                                 <h5 class="my-3">{{vm.user.name}}</h5>
-                                <p class="text-muted mb-1">{{vm.user.email}}</p>
-                                <p class="text-muted mb-4">{{vm.user.phoneNumber}}</p>
+                                <form name="form" ng-submit="vm.register()" role="form">
 
+                                    <div class="form-group" ng-class="{ 'has-error': form.name.$dirty && form.name.$error.required }">
+                                        <input type="text" name="name" id="nameup" class="form-control" ng-model="vm.user.name" required placeholder="Nombre">
+                                        <span ng-show="form.name.$dirty && form.name.$error.required" class="help-block">First name is required</span>
+                                    </div>
+
+                                    <div class="form-group" ng-class="{ 'has-error': form.email.$dirty && form.email.$error.required }">
+                                        <input type="text" name="emailup" id="Text1" class="form-control" ng-model="vm.user.email" required placeholder="Correo electrónico">
+
+                                        <span ng-show="form.email.$dirty && form.email.$error.required" class="help-block">Last name is required</span>
+                                    </div>
+
+                                    <div class="form-group" ng-class="{ 'has-error': form.password.$dirty && form.password.$error.required }">
+
+                                        <input type="password" name="passwordup" id="password" class="form-control" ng-model="vm.user.password" required placeholder="Contraseña">
+                                        <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Password is required</span>
+                                    </div>
+
+                                    <div class = "row">
+                                        <div class = "col-6">
+
+                                            <input type="text" class="form-control" ng-model="vm.user.document" placeholder="Documento">
+
+                                        </div>
+                                        <div class = "col-6">
+
+                                            <select class="form-control" ng-model="vm.user.docType" ng-options="doc.id as doc.name for doc in vm.allDocsType" >
+                                               
+                                            </select>
+
+                                        </div>
+                                    </div>
+
+                                    <br>
+
+                                    <div class = "row">
+                                        <div class = "col-6">
+
+                                            <input type="text" class="form-control" ng-model="vm.user.phoneNumber" placeholder="Telefono">
+
+                                        </div>
+                                        <div class = "col-6">
+                                            <select class="form-control" ng-model="vm.user.userRol" >
+                                                <option value="">Rol de usuario</option>        
+                                                <option value="2">Usuario</option> 
+                                                <option value="3">Empleado</option> 
+                                            </select>
+
+                                        </div>
+                                    </div>
+
+                                    <br><br>
+
+                                </form>
+                                <a class="btn btn-primary " style="color: #fff; background-color: #00d221;border-color: transparent" ng-click='vm.updateUser()'>Actualizar Datos personales</a>
+                                <a class="btn btn-primary " style="color: #fff; background-color: #1aab8b;border-color: transparent" data-toggle="modal" data-target="#crudModal">Publicar producto o servicio</a>
                             </div>
                         </div>
 
@@ -97,18 +149,18 @@
 
                     <form >
                         <div class="form-group">
-                            <input type="text" value="{{vm.selectProductName}}" class="form-control" id="name" placeholder="{{vm.selectProductName}}" ng-model="vm.updateProductName">
+                            <input type="text" value="{{vm.selectProductName}}" class="form-control" id="nameP" placeholder="{{vm.selectProductName}}" ng-model="vm.updateProductName">
                         </div>
                         <div class="form-group">
-                            <input type="text" value="{{vm.selectProductPrice}}" class="form-control" id="price" placeholder="${{vm.selectProductPrice}}" ng-model="vm.updateProductPrice">
+                            <input type="text" value="{{vm.selectProductPrice}}" class="form-control" id="priceP" placeholder="${{vm.selectProductPrice}}" ng-model="vm.updateProductPrice">
                         </div>
                         <div class="form-group">
-                            <input type="text" value="{{vm.selectProductImg}}" class="form-control" id="imageUrl" placeholder="{{vm.selectProductImg}}" ng-model="vm.updateProductImg">
+                            <input type="text" value="{{vm.selectProductImg}}" class="form-control" id="imageUrlP" placeholder="{{vm.selectProductImg}}" ng-model="vm.updateProductImg">
                         </div>
 
                         <div class="form-group">
                             <label for="description">Descripción</label>
-                            <textarea class="form-control input-area" value='{{vm.selectProductDes}}' id="description" rows="3" placeholder="{{vm.selectProductDes}}" ng-model="vm.updateProductDescription"></textarea>
+                            <textarea class="form-control input-area" value='{{vm.selectProductDes}}' id="descriptionP" rows="3" placeholder="{{vm.selectProductDes}}" ng-model="vm.updateProductDescription"></textarea>
                         </div>
                     </form>
                     <button href="#" type="button" class="btn btn-warning" style="color: #fff; background-color: #00d221;border-color: transparent;width: 100%" data-dismiss="modal" ng-click="vm.updateProduct()">Editar</button>

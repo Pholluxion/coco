@@ -25,6 +25,7 @@
         service.CreateUserProduct = CreateUserProduct;
         service.CreateProductCategory = CreateProductCategory;
         service.GetProductByUserId = GetProductByUserId;
+        service.GetProductByCatId = GetProductByCatId;
 
         return service;
 
@@ -80,6 +81,15 @@
 
         function GetProductByUserId(id) {
             var parametros = {process: 'getUserProd', id: id};
+
+            return $http({
+                method: 'POST',
+                url: 'apis/products.jsp',
+                params: parametros
+            }).then(handleSuccess, handleError('Error creating user'));
+        }
+        function GetProductByCatId(id) {
+            var parametros = {process: 'getCatProd', id: id};
 
             return $http({
                 method: 'POST',

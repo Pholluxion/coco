@@ -31,7 +31,7 @@ public class ConexionBD implements DataBase<Object> {
     private ConexionBD() {
         DB_driver = "com.mysql.cj.jdbc.Driver";
         host = "localhost:3306";
-        db = "coco";
+        db = "cocov2";
         url = "jdbc:mysql://" + host + "/" + db + "?serverTimezone=UTC";
         username = "root";
         password = "G1a9b9y8";

@@ -112,6 +112,28 @@ public class ProductDao implements GenericDao<ProductModel, String> {
         return products;
     }
     
+    public List<ProductModel> readAllByCategoryId(String id) {
+        products.clear();
+        try {
+            ResultSet data = (ResultSet) ProductDao.connection.read(this.getReadByCategoryIdQuery(id));
+            
+            while (data.next()) {
+                ProductModel p = new ProductModel();
+                p.setId(Integer.parseInt(data.getString("id")));
+                p.setName(data.getString("name"));
+                p.setDescription(data.getString("description"));
+                p.setPrice(data.getString("price"));
+                p.setImageUrl(data.getString("image_url"));
+                products.add(p);
+            }
+            Collections.shuffle(products);
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return products;
+    }
+    
     private String getReadQuery(String id) {
         return "SELECT * FROM product WHERE id = " + id + ";";
     }
@@ -145,6 +167,9 @@ public class ProductDao implements GenericDao<ProductModel, String> {
     
      private String getReadByUserIdQuery(String id) {
         return "SELECT * FROM product p INNER JOIN product_user up ON p.id = up.id_product where up.id_user = "+id+";";
+    }
+     private String getReadByCategoryIdQuery(String id) {
+        return "SELECT * FROM product p INNER JOIN product_category up ON p.id = up.id_product where up.id_category = "+id+";";
     }
 
 }

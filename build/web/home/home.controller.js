@@ -5,8 +5,8 @@
             .module('app')
             .controller('HomeController', HomeController);
 
-    HomeController.$inject = ['UserService', '$rootScope', 'FlashService', '$location', '$cookies', '$timeout'];
-    function HomeController(UserService, $rootScope, FlashService, $location, $cookies, $timeout) {
+    HomeController.$inject = ['UserService', '$rootScope', 'FlashService', '$location', '$cookies', '$timeout','$scope', '$route'];
+    function HomeController(UserService, $rootScope, FlashService, $location, $cookies, $timeout,$scope, $route) {
         var vm = this;
 
         vm.user = null;
@@ -18,6 +18,7 @@
         vm.gotoCart = gotoCart;
         vm.gotoHome = gotoHome;
         vm.addToCart = addToCart;
+        vm.loadAllProductsFilter = loadAllProductsFilter;
 
 
 
@@ -89,6 +90,30 @@
                             vm.valProducts = true;
                         }
                         console.log(product);
+                    });
+        }
+
+        function loadAllProductsFilter(cat) {
+
+            UserService.GetProductByCatId(cat)
+                    .then(function (product) {
+                        if (cat !== null && cat !== undefined) {
+
+                            console.log(cat);
+                            vm.valProductsFilter = true;
+                            vm.allProductsFilter = product.listProduct;
+                            //console.log(vm.allProductsFilter);
+                            if (product.listProduct.length === 0) {
+                                vm.valProductsNull = false;
+                            } else {
+                                vm.valProductsNull = true;
+
+                            }
+                        } else {
+                            vm.valProductsFilter = false;
+                    
+                             $route.reload();
+                        }
                     });
         }
 

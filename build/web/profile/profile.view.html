@@ -1,0 +1,224 @@
+<div class="container-fluid" >
+
+    <div class="col-12">
+
+        <div class="row" style="margin-top: 10px;margin-bottom: 10px" >
+            <div class="col-12">
+                <nav class="navbar navbar-light"  style="background-color: #fff; color: #00d221 ;border-radius: 10px">
+                    <a class="navbar-brand" href="#">
+                        <img src="img/logo.png" width="100" height="50" alt="">
+                    </a>
+                    <a class="nav-link"  style="color: #00d221;" href="#">Home<span class="sr-only">(current)</span></a>
+                    <a class="btn btn-primary " style="color: #00d221; background-color: #FFF;border-color: transparent">Foro</a>
+                    <a class="btn btn-primary " style="color: #fff; background-color: #00d221;border-color: transparent" ng-click="vm.gotoPerfil()">Perfil</a>
+                    <a class="btn btn-primary " style="color: #00d221; background-color: #FFF;border-color: transparent" ng-click="vm.gotoCart()">Carrito</a>
+                    <a href="#!/login" class="btn btn-primary btn-sm" style="background-color: transparent;border-color: transparent">
+                        <i class="fa fa-sign-out" style="font-size:36px;color:#00d221 "></i>
+                    </a>
+                </nav>
+            </div>
+        </div>
+
+        <div class="row" >
+
+            <div class="col-12 " style="height: 90vh;width: 95vw" >
+
+                <div class="row" style="width: 100%; height:90%">
+                    <div class="col-lg-4">
+                        <div class="card mb-4" style="height: 80vh;width: auto">
+                            <div class="card-body text-center" style="margin-top: 50px">
+                                <img ng-src="https://cdn-icons-png.flaticon.com/512/4645/4645949.png" alt="avatar"
+                                     class="rounded-circle img-fluid" style="width: 150px;">
+                                <h5 class="my-3">{{vm.user.name}}</h5>
+                                <form name="form" ng-submit="vm.register()" role="form">
+
+                                    <div class="form-group" ng-class="{ 'has-error': form.name.$dirty && form.name.$error.required }">
+                                        <input type="text" name="name" id="nameup" class="form-control" ng-model="vm.user.name" required placeholder="Nombre">
+                                        <span ng-show="form.name.$dirty && form.name.$error.required" class="help-block">First name is required</span>
+                                    </div>
+
+                                    <div class="form-group" ng-class="{ 'has-error': form.email.$dirty && form.email.$error.required }">
+                                        <input type="text" name="emailup" id="Text1" class="form-control" ng-model="vm.user.email" required placeholder="Correo electrónico">
+
+                                        <span ng-show="form.email.$dirty && form.email.$error.required" class="help-block">Last name is required</span>
+                                    </div>
+
+                                    <div class="form-group" ng-class="{ 'has-error': form.password.$dirty && form.password.$error.required }">
+
+                                        <input type="password" name="passwordup" id="password" class="form-control" ng-model="vm.user.password" required placeholder="Contraseña">
+                                        <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Password is required</span>
+                                    </div>
+
+                                    <div class = "row">
+                                        <div class = "col-6">
+
+                                            <input type="text" class="form-control" ng-model="vm.user.document" placeholder="Documento">
+
+                                        </div>
+                                        <div class = "col-6">
+
+                                            <select class="form-control" ng-model="vm.user.docType" ng-options="doc.id as doc.name for doc in vm.allDocsType" >
+                                               
+                                            </select>
+
+                                        </div>
+                                    </div>
+
+                                    <br>
+
+                                    <div class = "row">
+                                        <div class = "col-6">
+
+                                            <input type="text" class="form-control" ng-model="vm.user.phoneNumber" placeholder="Telefono">
+
+                                        </div>
+                                        <div class = "col-6">
+                                            <select class="form-control" ng-model="vm.user.userRol" >
+                                                <option value="">Rol de usuario</option>        
+                                                <option value="2">Usuario</option> 
+                                                <option value="3">Empleado</option> 
+                                            </select>
+
+                                        </div>
+                                    </div>
+
+                                    <br><br>
+
+                                </form>
+                                <a class="btn btn-primary " style="color: #fff; background-color: #00d221;border-color: transparent" ng-click='vm.updateUser()'>Actualizar Datos personales</a>
+                                <a class="btn btn-primary " style="color: #fff; background-color: #1aab8b;border-color: transparent" data-toggle="modal" data-target="#crudModal">Publicar producto o servicio</a>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-8" ng-if="vm.valProducts" style="overflow-y: scroll; height: 80vh;width: 90vw" >
+
+                        <div ng-class="{ 'alert': flash, 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }" ng-if="flash" ng-bind="flash.message"></div>
+                        <div class="row row-cols-3">
+
+                            <div class="col" ng-repeat="product in vm.allProducts">
+                                <div class="card" style=" height:20vw; width:30vh; border-radius: 20px;" >
+                                    <div >
+                                        <button type="button" class="btn btn-danger" ng-click="vm.deleteProduct(product.id)" >&times;</button>
+                                    </div>
+                                    <div class="card-body"ng-click="vm.showModal(product)" data-toggle="modal" data-target="#myModal">
+                                        <div style="margin: 20px">
+                                            <img  ng-src="{{product.imageUrl}}" class="img-fluid" alt="{{product.name}}" style="border-radius: 20px;margin-bottom: 20px">
+                                            <p class="card-title">{{product.name}}</p>
+                                            <p class="card-subtitle text-muted" style="font-size:large ">${{product.price}}</p>
+                                            <p class="card-text text-muted myoverflow" style="font-size:x-small;margin-bottom: 30px;text-overflow: ellipsis; ">{{product.description}}</p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-8" ng-if="!vm.valProducts" style="display: flex;flex-direction: column;justify-content: center;text-align: center; height: 75vh;width: 90vw; align-items: center;align-items: center">
+                        <h4>Aún no tienes productos a la venta</h4>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">{{vm.selectProductName}}</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+
+
+                <div style="margin: 20px">
+                    <img  src="{{vm.selectProductImg}}" class="card-img-top " alt="{{vm.selectProductName}}" style="border-radius: 20px;margin-bottom: 20px" >
+
+                    <form >
+                        <div class="form-group">
+                            <input type="text" value="{{vm.selectProductName}}" class="form-control" id="nameP" placeholder="{{vm.selectProductName}}" ng-model="vm.updateProductName">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" value="{{vm.selectProductPrice}}" class="form-control" id="priceP" placeholder="${{vm.selectProductPrice}}" ng-model="vm.updateProductPrice">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" value="{{vm.selectProductImg}}" class="form-control" id="imageUrlP" placeholder="{{vm.selectProductImg}}" ng-model="vm.updateProductImg">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="description">Descripción</label>
+                            <textarea class="form-control input-area" value='{{vm.selectProductDes}}' id="descriptionP" rows="3" placeholder="{{vm.selectProductDes}}" ng-model="vm.updateProductDescription"></textarea>
+                        </div>
+                    </form>
+                    <button href="#" type="button" class="btn btn-warning" style="color: #fff; background-color: #00d221;border-color: transparent;width: 100%" data-dismiss="modal" ng-click="vm.updateProduct()">Editar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="crudModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+
+            <div class="modal-header">
+                <div class="container" style="width: 100%;height: auto; display: flex;justify-content: center;">
+                    <img src="img/logo.png"  height="100" alt="">
+                </div>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+
+            <div class="modal-body">
+                <form style="margin: 20px">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="name" placeholder="Nombre del producto o servicio" ng-model="vm.newProductName">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="price" placeholder="$Precio" ng-model="vm.newProductPrice">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="imageUrl" placeholder="URL" ng-model="vm.newProductImg">
+                    </div>
+                    <div class="form-group">
+
+                        <select class="form-control" ng-model="vm.newProductCategory" ng-options="cat.id as cat.name for cat in vm.allCategories" >
+                            <option value="">Categoria</option> 
+                        </select>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Descripción</label>
+                        <textarea class="form-control" id="description" rows="3" ng-model="vm.newProductDescription"></textarea>
+                    </div>
+
+                    <div >
+                        <button href="#" type="button" class="btn btn-primary" ng-click="vm.createNewProduct()" data-dismiss="modal" style="width: 100%;background-color: #00d221; border-color: #fff">Publicar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

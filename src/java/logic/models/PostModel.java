@@ -1,15 +1,22 @@
-
 package logic.models;
 
-
 public class PostModel {
-    
+
+    private String id;
     private String message;
     private String date;
     private String user;
     private String topic;
 
     public PostModel() {
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getMessage() {

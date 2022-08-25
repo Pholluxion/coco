@@ -1,0 +1,186 @@
+<div class="container-fluid" >
+
+    <div class="col-12">
+
+        <div class="row" style="margin-top: 10px;margin-bottom: 10px" >
+            <div class="col-12">
+                <nav class="navbar navbar-light"  style="background-color: #fff; color: #00d221 ;border-radius: 10px">
+                    <a class="navbar-brand" href="#">
+                        <img src="img/logo.png" width="100" height="50" alt="">
+
+                    </a>
+                    <a class="nav-link"  style="color: #00d221;" href="#">Home<span class="sr-only">(current)</span></a>
+                    <a class="btn btn-primary " style="color: #00d221; background-color: #FFF;border-color: transparent">Foro</a>
+                    <a class="btn btn-primary " style="color: #00d221; background-color: #FFF;border-color: transparent" ng-click="vm.gotoPerfil()">Perfil</a>
+                    <a class="btn btn-primary " style="color: #fff; background-color: #00d221;border-color: transparent" ng-click="vm.gotoCart()">Carrito</a>
+                    <a href="#!/login" class="btn btn-primary btn-sm" style="background-color: transparent;border-color: transparent">
+                        <i class="fa fa-sign-out" style="font-size:36px;color:#00d221 "></i>
+                    </a>
+                </nav>
+            </div>
+        </div>
+
+        <div class="row" >
+
+            <div class="col-12 " style="height: 90vh;width: 95vw" >
+
+                <div class="row" style="width: 100%; height:90%">
+                    <div class="col-lg-4">
+                        <div class="card mb-4" style="height: 80vh;width: auto">
+                            <div class="card-body text-center">
+                                <img ng-src="https://cdn.pixabay.com/photo/2013/07/12/14/53/cart-148964__340.png" alt="avatar"
+                                     class="img-fluid" style="width: 150px;margin-top: 10vh">
+                                <h5 class="my-3">Carrito de {{vm.user.name}}</h5>
+                                <a class="btn btn-primary " style="color: #fff; background-color: #00d221;border-color: transparent" data-toggle="modal" data-target="#crudModal">Ir a Pagar</a>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-8" ng-if="vm.carListIsEmty" style="overflow-y: scroll; height: 85vh;width: 90vw" >
+
+                        <div ng-class="{ 'alert': flash, 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }" ng-if="flash" ng-bind="flash.message"></div>
+                        <div class="row row-cols-3">
+
+                            <div class="col" ng-repeat="product in vm.carList">
+                                <div class="card" style=" height:20vw; width:30vh; border-radius: 20px;" >
+
+                                    <div class="card-body"ng-click="vm.showModal(product)" data-toggle="modal" data-target="#myModal">
+                                        <div style="margin: 20px">
+                                            <img  ng-src="{{product.imageUrl}}" class="img-fluid" alt="{{product.name}}" style="border-radius: 20px;margin-bottom: 20px">
+                                            <p class="card-title">{{product.name}}</p>
+                                            <p class="card-subtitle text-muted" style="font-size:large ">${{product.price}}</p>
+                                            <p class="card-text text-muted myoverflow" style="font-size:x-small;margin-bottom: 30px;text-overflow: ellipsis; ">{{product.description}}</p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-8" ng-if="!vm.carListIsEmty" style="display: flex;flex-direction: column;justify-content: center;text-align: center; height: 75vh;width: 90vw; align-items: center;align-items: center">
+                        <h4>Aún no tienes productos en tu carrito</h4>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">{{vm.selectProductName}}</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+
+
+                <div style="margin: 20px">
+                    <img  src="{{vm.selectProductImg}}" class="card-img-top " alt="{{vm.selectProductName}}" style="border-radius: 20px;margin-bottom: 20px" >
+
+                    <form >
+                        <div class="form-group">
+                            <input type="text" value="{{vm.selectProductName}}" class="form-control" id="name" placeholder="{{vm.selectProductName}}" ng-model="vm.updateProductName">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" value="{{vm.selectProductPrice}}" class="form-control" id="price" placeholder="${{vm.selectProductPrice}}" ng-model="vm.updateProductPrice">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" value="{{vm.selectProductImg}}" class="form-control" id="imageUrl" placeholder="{{vm.selectProductImg}}" ng-model="vm.updateProductImg">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="description">Descripción</label>
+                            <textarea class="form-control input-area" value='{{vm.selectProductDes}}' id="description" rows="3" placeholder="{{vm.selectProductDes}}" ng-model="vm.updateProductDescription"></textarea>
+                        </div>
+                    </form>
+                    <button href="#" type="button" class="btn btn-warning" style="color: #fff; background-color: #00d221;border-color: transparent;width: 100%" data-dismiss="modal" ng-click="vm.updateProduct()">Editar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="crudModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+
+            <div class="modal-header">
+                <div class="container" style="width: 100%;height: auto; display: flex;justify-content: center;">
+                    <img src="img/logo.png"  height="100" alt="">
+                </div>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+
+            <div class="modal-body">
+                <form action="#" class="credit-card-div" style="margin: 20px"  >
+                    <div class="panel panel-default" >
+                        <div class="panel-heading">
+
+                            <div class="row ">
+                                <div class="col-md-12" style="padding: 10px">
+                                    <input type="text" class="form-control" placeholder="Número de tarjeta" />
+                                </div>
+                            </div>
+                            <div class="row ">
+                                <div class="col-md-3 col-sm-3 col-xs-3" style="padding: 10px">
+                                    <span class="help-block text-muted small-font" >Mes</span>
+                                    <input type="text" class="form-control" placeholder="MM" />
+                                </div>
+                                <div class="col-md-3 col-sm-3 col-xs-3" style="padding: 10px">
+                                    <span class="help-block text-muted small-font" >Año</span>
+                                    <input type="text" class="form-control" placeholder="YY" />
+                                </div>
+                                <div class="col-md-3 col-sm-3 col-xs-3" style="padding: 10px">
+                                    <span class="help-block text-muted small-font" >  CCV</span>
+                                    <input type="text" class="form-control" placeholder="CCV" />
+                                </div>
+                                <div class="col-md-3 col-sm-3 col-xs-3" style="padding: 10px">
+                                    <img ng-src="https://www.movii.com.co/wp-content/themes/movii/img/xcredito.png.pagespeed.ic.yske37ktIB.png" style="height: 70px;width: auto" class="img-rounded" />
+                                </div>
+                            </div>
+                            <div class="row ">
+                                <div class="col-md-12 pad-adjust" style="padding: 10px">
+
+                                    <input type="text" class="form-control" placeholder="Nombre del titular" />
+                                </div>
+                            </div>
+            
+                            <div class="row ">
+                                <div class="col-md-6 col-sm-6 col-xs-6 pad-adjust">
+                                    <input type="submit"  class="btn btn-primary" style="background-color: #FFF;color: #00d221;border-bottom-color:#00d221 " value="Cancelar" />
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-6 pad-adjust">
+                                    <input type="submit"  class="btn btn-warning" style="background-color: #00d221;color: #FFF" value="Pagar" />
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

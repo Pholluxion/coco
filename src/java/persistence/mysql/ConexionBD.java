@@ -34,7 +34,7 @@ public class ConexionBD implements DataBase<Object> {
         db = "cocov2";
         url = "jdbc:mysql://" + host + "/" + db + "?serverTimezone=UTC";
         username = "root";
-        password = "G1a9b9y8";
+        password = "";
         try {
             Class.forName(DB_driver);
         } catch (ClassNotFoundException ex) {

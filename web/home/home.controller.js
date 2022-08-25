@@ -5,11 +5,12 @@
             .module('app')
             .controller('HomeController', HomeController);
 
-    HomeController.$inject = ['UserService', '$rootScope', 'FlashService', '$location', '$cookies', '$timeout','$scope', '$route'];
-    function HomeController(UserService, $rootScope, FlashService, $location, $cookies, $timeout,$scope, $route) {
+    HomeController.$inject = ['UserService', '$rootScope', 'FlashService', '$location', '$cookies', '$timeout', '$scope', '$route'];
+    function HomeController(UserService, $rootScope, FlashService, $location, $cookies, $timeout, $scope, $route) {
         var vm = this;
 
         vm.user = null;
+        vm.selectPro = null;
         vm.carList = [];
 
         vm.deleteUser = deleteUser;
@@ -18,6 +19,7 @@
         vm.gotoCart = gotoCart;
         vm.gotoHome = gotoHome;
         vm.addToCart = addToCart;
+        vm.selectProduct = selectProduct;
         vm.loadAllProductsFilter = loadAllProductsFilter;
 
 
@@ -51,10 +53,10 @@
             }
         }
 
-        function addToCart(product) {
+        function addToCart() {
             console.log(vm.carList);
             vm.carList = $rootScope.cart.cartProducts;
-            vm.carList.push(product);
+            vm.carList.push( vm.selectPro);
 
             $rootScope.cart = {
                 cartProducts: vm.carList
@@ -63,6 +65,11 @@
 
             vm.carList = $rootScope.cart.cartProducts;
             console.log(vm.carList);
+             //FlashService.Success('Nuevo producto agregado al carrito', true);
+
+        }
+        function selectProduct(product) {
+            vm.selectPro = product;
 
         }
 
@@ -111,8 +118,8 @@
                             }
                         } else {
                             vm.valProductsFilter = false;
-                    
-                             $route.reload();
+
+                            $route.reload();
                         }
                     });
         }

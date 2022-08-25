@@ -126,7 +126,7 @@
 
             try {
                 UserModel user = userDao.read(id);
-                System.out.println(user.getName());
+            
                 respuesta += "\"" + proceso + "\": true,\"user\":" + new Gson().toJson(user);
             } catch (Exception ex) {
                 respuesta += "\"" + proceso + "\": false,\"user\":[]";

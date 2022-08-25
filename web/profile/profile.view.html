@@ -58,7 +58,7 @@
                                         <div class = "col-6">
 
                                             <select class="form-control" ng-model="vm.user.docType" ng-options="doc.id as doc.name for doc in vm.allDocsType" >
-                                               
+
                                             </select>
 
                                         </div>
@@ -85,13 +85,13 @@
                                     <br><br>
 
                                 </form>
-                                <a class="btn btn-primary " style="color: #fff; background-color: #00d221;border-color: transparent" ng-click='vm.updateUser()'>Actualizar Datos personales</a>
+                                <a class="btn btn-primary " style="color: #fff; background-color: #00d221;border-color: transparent" data-toggle="modal" data-target="#confirmUpdate">Actualizar Datos personales</a>
                                 <a class="btn btn-primary " style="color: #fff; background-color: #1aab8b;border-color: transparent" data-toggle="modal" data-target="#crudModal">Publicar producto o servicio</a>
                             </div>
                         </div>
 
                     </div>
-                    <div class="col-8" ng-if="vm.valProducts" style="overflow-y: scroll; height: 80vh;width: 90vw" >
+                    <div class="col-8" ng-if="vm.valProducts" style="overflow-y: scroll; height: 85vh;width: 90vw" >
 
                         <div ng-class="{ 'alert': flash, 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }" ng-if="flash" ng-bind="flash.message"></div>
                         <div class="row row-cols-3">
@@ -118,6 +118,7 @@
                     </div>
 
                     <div class="col-8" ng-if="!vm.valProducts" style="display: flex;flex-direction: column;justify-content: center;text-align: center; height: 75vh;width: 90vw; align-items: center;align-items: center">
+                        <div ng-class="{ 'alert': flash, 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }" ng-if="flash" ng-bind="flash.message"></div>
                         <h4>Aún no tienes productos a la venta</h4>
                     </div>
                 </div>
@@ -172,6 +173,18 @@
     </div>
 </div>
 
+<div class="modal fade" id="confirmUpdate">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <div class="modal-body text-center">
+                <h5 style="margin-bottom: 50px;margin-top: 50px" >Si actualiza ahora se cerrará la actual sesión</h5>
+                <a class="btn btn-primary " style="color: #fff; background-color: #1aab8b;border-color: transparent;margin-right: 150px" data-dismiss="modal">Cancelar</a>
+                <a class="btn btn-primary " style="color: #fff; background-color: #00d221;border-color: transparent" data-dismiss="modal" ng-click='vm.updateUser()'>Actualizar</a>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="modal fade" id="crudModal">
     <div class="modal-dialog">

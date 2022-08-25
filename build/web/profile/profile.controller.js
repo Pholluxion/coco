@@ -89,6 +89,7 @@
                     .then(function () {
                         loadAllProducts();
                         $location.path('/profile');
+                        FlashService.Success('Producto eliminado con exito', true);
                     });
         }
 
@@ -98,7 +99,7 @@
                         if (data.ok) {
                             UserService.CreateUserProduct(vm.user.id).then(function (data) {
                                 if (data.ok) {
-                                    console.log(data.ok);
+                                    console.log("User Category: ",data.ok);
                                 }
 
                             });
@@ -109,8 +110,8 @@
 
                             });
                             loadAllUserProducts();
-                            $location.path('/');
-                            FlashService.Success('Nuevo producto agregado exitoso', true);
+                            $route.reload();
+                            FlashService.Success('Nuevo producto agregado con exito', true);
                         }
 
                         vm.newProductName = null;
@@ -119,7 +120,6 @@
                         vm.newProductDescription = null;
                         vm.newProductCategory = null;
 
-                        gotoHome();
 
                     });
         }
@@ -135,6 +135,7 @@
                             });
                             loadAllUserProducts();
                             $route.reload();
+                            FlashService.Success('Producto actualizado con exito', true);
                         }
 
                     });

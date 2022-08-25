@@ -1,66 +1,68 @@
-<div class="wrapper">
-    <img class="img-fluid" src="img/logo.png" alt="logo" style="height: 15vh;width: auto"/>
-    <header>Registrarte</header>
-    <h4>Es rápido y fácil.</h4>
-    <form name="form" ng-submit="vm.register()" role="form">
+<div>
+    <div ng-class="{ 'alert': flash, 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }" ng-if="flash" ng-bind="flash.message"></div>
+    <div class="wrapper">
+        <img class="img-fluid" src="img/logo.png" alt="logo" style="height: 15vh;width: auto"/>
+        <header>Registrarte</header>
+        <h4>Es rápido y fácil.</h4>
+        <form name="form" ng-submit="vm.register()" role="form">
 
-        <div class="form-group" ng-class="{ 'has-error': form.name.$dirty && form.name.$error.required }">
-            <input type="text" name="name" id="name" class="form-control" ng-model="vm.user.name" required placeholder="Nombre">
-            <span ng-show="form.name.$dirty && form.name.$error.required" class="help-block">First name is required</span>
-        </div>
-
-        <div class="form-group" ng-class="{ 'has-error': form.email.$dirty && form.email.$error.required }">
-            <input type="text" name="email" id="Text1" class="form-control" ng-model="vm.user.email" required placeholder="Correo electrónico">
-
-            <span ng-show="form.email.$dirty && form.email.$error.required" class="help-block">Last name is required</span>
-        </div>
-
-        <div class="form-group" ng-class="{ 'has-error': form.password.$dirty && form.password.$error.required }">
-
-            <input type="password" name="password" id="password" class="form-control" ng-model="vm.user.password" required placeholder="Contraseña">
-            <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Password is required</span>
-        </div>
-
-        <div class = "row">
-            <div class = "col-6">
-
-                <input type="text" class="form-control" ng-model="vm.user.document" placeholder="Documento">
-
+            <div class="form-group" ng-class="{ 'has-error': form.name.$dirty && form.name.$error.required }">
+                <input type="text" name="name" id="name" class="form-control" ng-model="vm.user.name" required placeholder="Nombre">
+                <span ng-show="form.name.$dirty && form.name.$error.required" class="help-block">First name is required</span>
             </div>
-            <div class = "col-6">
 
-                <select class="form-control" ng-model="vm.user.doc_type" ng-options="doc.id as doc.name for doc in vm.allDocsType" >
-                    <option value="">Tipo de documento</option> 
-                </select>
+            <div class="form-group" ng-class="{ 'has-error': form.email.$dirty && form.email.$error.required }">
+                <input type="text" name="email" id="Text1" class="form-control" ng-model="vm.user.email" required placeholder="Correo electrónico">
 
+                <span ng-show="form.email.$dirty && form.email.$error.required" class="help-block">Last name is required</span>
             </div>
-        </div>
 
-        <br>
+            <div class="form-group" ng-class="{ 'has-error': form.password.$dirty && form.password.$error.required }">
 
-        <div class = "row">
-            <div class = "col-6">
-
-                <input type="text" class="form-control" ng-model="vm.user.phone_number" placeholder="Telefono">
-
+                <input type="password" name="password" id="password" class="form-control" ng-model="vm.user.password" required placeholder="Contraseña">
+                <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Password is required</span>
             </div>
-            <div class = "col-6">
-                <select class="form-control" ng-model="vm.user.rol" >
-                    <option value="">Rol de usuario</option>        
-                    <option value="2">Usuario</option> 
-                    <option value="3">Empleado</option> 
-                </select>
 
+            <div class = "row">
+                <div class = "col-6">
+
+                    <input type="text" class="form-control" ng-model="vm.user.document" placeholder="Documento">
+
+                </div>
+                <div class = "col-6">
+
+                    <select class="form-control" ng-model="vm.user.doc_type" ng-options="doc.id as doc.name for doc in vm.allDocsType" >
+                        <option value="">Tipo de documento</option> 
+                    </select>
+
+                </div>
             </div>
-        </div>
 
-        <br><br>
+            <br>
+
+            <div class = "row">
+                <div class = "col-6">
+
+                    <input type="text" class="form-control" ng-model="vm.user.phone_number" placeholder="Telefono">
+
+                </div>
+                <div class = "col-6">
+                    <select class="form-control" ng-model="vm.user.rol" >
+                        <option value="">Rol de usuario</option>        
+                        <option value="2">Usuario</option> 
+                        <option value="3">Empleado</option> 
+                    </select>
+
+                </div>
+            </div>
+
+            <br><br>
 
 
-        <div class="form-actions">
-            <button type="submit" ng-disabled="form.$invalid || vm.dataLoading" class="btn btn-primary" style="color: #FFFFFF; background-color: #00d221;border-color: transparent">Register</button>
-            <a href="#!/login" class="btn btn-link" style="color: #00d221; ">Cancelar</a>
-        </div>
-    </form>
+            <div class="form-actions">
+                <button type="submit" ng-disabled="form.$invalid || vm.dataLoading" class="btn btn-primary" style="color: #FFFFFF; background-color: #00d221;border-color: transparent">Register</button>
+                <a href="#!/login" class="btn btn-link" style="color: #00d221; ">Cancelar</a>
+            </div>
+        </form>
+    </div>
 </div>
-

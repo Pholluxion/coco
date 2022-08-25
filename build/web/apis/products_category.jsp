@@ -41,7 +41,7 @@
             ProductCategoryModel product = new ProductCategoryModel();
 
             product.setId_category(Integer.valueOf(user));
-            product.setId_product(Integer.valueOf(0));
+            product.setId_product(0);
 
             if (productDao.create(product)) {
                 respuesta += "\"" + proceso + "\": true";

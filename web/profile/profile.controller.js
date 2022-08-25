@@ -20,6 +20,7 @@
 
         vm.gotoHome = gotoHome;
         vm.gotoCart = gotoCart;
+        vm.gotoForum = gotoForum;
 
 
         function gotoHome() {
@@ -30,6 +31,9 @@
             $location.path('/cart');
         }
 
+        function gotoForum() {
+            $location.path('/forum');
+        }
 
 
         function initController() {
@@ -99,7 +103,7 @@
                         if (data.ok) {
                             UserService.CreateUserProduct(vm.user.id).then(function (data) {
                                 if (data.ok) {
-                                    console.log("User Category: ",data.ok);
+                                    console.log("User Category: ", data.ok);
                                 }
 
                             });
@@ -144,7 +148,7 @@
 
             UserService.UpdateUser(vm.user);
             $location.path('/login');
-                   
+
         }
         function loadAllDocs() {
             UserService.GetUserDocType()

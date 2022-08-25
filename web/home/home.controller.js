@@ -18,6 +18,7 @@
         vm.gotoPerfil = gotoPerfil;
         vm.gotoCart = gotoCart;
         vm.gotoHome = gotoHome;
+        vm.gotoForum = gotoForum;
         vm.addToCart = addToCart;
         vm.selectProduct = selectProduct;
         vm.loadAllProductsFilter = loadAllProductsFilter;
@@ -43,6 +44,9 @@
         }
         function gotoPerfil() {
             $location.path('/profile');
+        }
+        function gotoForum() {
+            $location.path('/forum');
         }
 
         function loadCart() {

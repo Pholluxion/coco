@@ -38,6 +38,12 @@
                 templateUrl: 'cart/cart.view.html',
                 controllerAs: 'vm'
             })
+            
+            .when('/forum', {
+                controller: 'ForumController',
+                templateUrl: 'forum/forum.view.html',
+                controllerAs: 'vm'
+            })
 
             .otherwise({ redirectTo: '/login' });
     }

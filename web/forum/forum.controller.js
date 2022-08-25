@@ -3,10 +3,10 @@
 
     angular
             .module('app')
-            .controller('CartController', CartController);
+            .controller('ForumController', ForumController);
 
-    CartController.$inject = ['UserService', '$rootScope', 'FlashService', '$location', '$route'];
-    function CartController(UserService, $rootScope, FlashService, $location, $route) {
+    ForumController.$inject = ['UserService', '$rootScope', 'FlashService', '$location', '$route'];
+    function ForumController(UserService, $rootScope, FlashService, $location, $route) {
         var vm = this;
 
         vm.user = null;
@@ -20,7 +20,6 @@
         vm.gotoHome = gotoHome;
         vm.gotoCart = gotoCart;
         vm.gotoPerfil = gotoPerfil;
-        vm.gotoForum = gotoForum;
 
 
         function gotoPerfil() {
@@ -34,11 +33,6 @@
         function gotoCart() {
             $location.path('/cart');
         }
-
-        function gotoForum() {
-            $location.path('/forum');
-        }
-
 
         function initController() {
             loadCurrentUser();

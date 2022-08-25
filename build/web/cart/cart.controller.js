@@ -20,6 +20,7 @@
         vm.gotoHome = gotoHome;
         vm.gotoCart = gotoCart;
         vm.gotoPerfil = gotoPerfil;
+        vm.gotoForum = gotoForum;
 
 
         function gotoPerfil() {
@@ -33,6 +34,11 @@
         function gotoCart() {
             $location.path('/cart');
         }
+
+        function gotoForum() {
+            $location.path('/forum');
+        }
+
 
         function initController() {
             loadCurrentUser();
